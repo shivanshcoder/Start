@@ -38,9 +38,11 @@ void assign(Agent &a, string username ,int lev);
 void email_input(email &e);
 void inputs(string &s, bool alpha = false, int num_limit = 1, int alpc_limit = 1, string statement = "", char ch = '\n');
 void input_file(Agent &A, string username);
+void output_file(Agent &A);
 void check_if_superuser();
 void input_choice(string Question, string &ans);
 void hide_files(bool hide);
+void input_int(string statement, string type, int &num);
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched);
 
 class credentials {
@@ -263,19 +265,19 @@ void profiles::add_profile() {
 		return;
 	}
 	int age, level;
-
 	cout << "Enter Name:";
 	cin >> A.name;
-	cout << "\n\nEnter Age:";
-	cin >> A.age;
-	cout << "\n\nEnter Level:";
-	cin >> A.level;
+
+	input_int("\n\nEnter Age:", "Age", A.age);
+	input_int("\n\nEnter Level:","Level",A.level);
+
 	cout << "\n\nEnter Post:";
 	cin >> A.post;
 	cout << "\n\nEnter Email-ID:";
 	email_input(A.id);
 	cout << "\n\nEnter Mobile Number:";
 	cin >> A.mobile_num;
+
 	while (true) {
 		vector<string>scrap;
 		cout << "\n\nCreate a Username:";
@@ -289,18 +291,7 @@ void profiles::add_profile() {
 			A.description.push_back(descrip);
 		}
 		cin.clear();
-		ofstream add_data(A.username + ".txt");
-		add_data << A.name << '\n' << A.age
-			<< '\n' << A.level << '\n'
-			<< A.post << '\n' << A.id.id << '\n'
-			<< A.mobile_num << '\n';
-		for (int i = 0; i < A.description.size(); ++i) {
-			add_data << A.description[i] << " ";
-		}
-
-		ofstream add_list("confidentials.txt", ios::app);
-		add_list << "\n" << A.username << ' ' << '='
-			<< ' ' << hex << A.password << ' ' << dec << A.level;
+		output_file(A);
 	}
 void profiles::your_profile() {
 	input_file(A, user());
@@ -376,8 +367,29 @@ void profiles::edit_profile() {
 	cout << setw(44) << "Edit\n"
 		<< "\n\n 1. Change username"
 		<< "\n\n 2. Change password"
-		<< "\n\n 3. Edit Description"
-		<< "\n\n 4. ";
+		<< "\n\n 3. Edit Description";
+	int choice;
+	cin >> choice;
+	switch (choice){
+	case 1:
+		while (true) {
+			vector<string>scrap;
+			cout << "\n\nCreate a Username:";
+			inputs(A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
+			cout << endl << "Username already occupied!!";
+		}
+		break;
+	case 2:
+		add_pass(A.password);
+		break;
+	case 3:
+		while (cin) {
+			string s;
+			cin >> s;
+			A.description.push_back(s);
+		}
+	}
+	output_file(A);
 }
 void profiles::add_pass(string &p) {
 	string p1, p2;
@@ -387,7 +399,13 @@ void profiles::add_pass(string &p) {
 	inputs(p2, true, 3, 2, "Password");
 	if (p1 != p2) {
 		cout << "\npasswords dont match!!";
-		getchar();
+		_getch();
+		add_pass(p);
+	}
+	if (p2 == A.username) {
+		cout << "Password is not strong since USERNAME and PASSWORD matches!!";
+		_getch();
+		add_pass(p);
 	}
 	p = p2;
 }
@@ -480,11 +498,41 @@ void input_file(Agent &A,string username){
 		A.description.push_back(descrip);
 	}
 }
+void output_file(Agent &A) {
+	ofstream output(A.username + ".txt");
+	if (!output) {
+		cout << "No File Present";
+		_getch();
+		return;
+	}
+	output << A.name << '\n' << A.age
+		<< '\n' << A.level << '\n'
+		<< A.post << '\n' << A.id.id << '\n'
+		<< A.mobile_num << '\n';
+	for (int i = 0; i < A.description.size(); ++i) {
+		output << A.description[i] << " ";
+	}
+
+	ofstream add_list("confidentials.txt", ios::app);
+	output << "\n" << A.username << ' ' << '='
+		<< ' ' << A.password << ' ' << A.level;
+}
 void input_choice(string Question, string &ans) {
-	cout << Question;
+	cout << endl <<Question;
 	cin >> ans;
 }
-
+void input_int(string statement ,string type ,int &num) {
+	while (true) {
+		cout << endl << statement << ":";
+		cin >> num;
+		if(!cin){
+			cout << "Not a " << type << " type Input!!";
+			cin.clear();
+			cin.ignore(10000, '\n');
+		}
+		else return;
+	}
+}
 /*void check_input_and_take(string statement,auto data) {
 	while (true) {
 		cout << statement;
