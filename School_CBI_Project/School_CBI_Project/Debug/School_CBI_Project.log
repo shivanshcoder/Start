@@ -1,20 +1,19 @@
 ﻿  School_Project.cpp
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(93): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(94): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
   c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(46): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(70): note: see declaration of 'profiles'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(93): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(71): note: see declaration of 'profiles'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(94): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
   c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(46): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(81): note: see declaration of 'criminals'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(93): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(82): note: see declaration of 'criminals'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(94): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
   c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(46): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(89): note: see declaration of 'suspects'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(274): warning C4129: 'E': unrecognized character escape sequence
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(290): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(262): warning C4101: 'level': unreferenced local variable
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(262): warning C4101: 'age': unreferenced local variable
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(311): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(352): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(505): warning C4018: '<': signed/unsigned mismatch
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(90): note: see declaration of 'suspects'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(297): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(265): warning C4101: 'level': unreferenced local variable
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(265): warning C4101: 'age': unreferenced local variable
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(316): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(366): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(519): warning C4018: '<': signed/unsigned mismatch
 School_Project.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
 fltkd.lib(case.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(case.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
 fltkd.lib(fl_call_main.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_call_main.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info

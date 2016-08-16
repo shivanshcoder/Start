@@ -46,6 +46,7 @@ int search_from_file_edit(vector<string>&data, string file, string to_be_searche
 class credentials {
 public:
 	credentials(bool to_desplayornot) {
+		eligibility = false;
 		int i = 0;
 		Login();
 		while (eligibility == false && i<5) {
@@ -122,6 +123,12 @@ void credentials::Login() {
 	if (!ifs) cout << "Error!!!";
 	while (true) {
 		ifs >> id_real >> c >> id_passs >> leve;
+
+		if (!ifs) {
+			eligibility = false;
+			return;
+		}
+
 		if (A.username == id_real && A.password == id_passs) {
 			eligibility = true;
 			A.level = leve;
@@ -130,10 +137,6 @@ void credentials::Login() {
 			return;
 		}
 
-		if (!ifs) {
-			eligibility = false;
-			return;
-		}
 	}
 }
 void credentials::Logout() {
@@ -251,7 +254,7 @@ void menu::suspects_disp(){
 
 void profiles::add_profile() {
 	system("cls");
-	cout << setw(44) << "Add Profile";
+	cout << setw(44) << "Add Profile\n";
 	string descrip;
 	if (leve() < 4) {
 		cout << setw(45) << "You are not Authorised\n";
@@ -263,40 +266,42 @@ void profiles::add_profile() {
 
 	cout << "Enter Name:";
 	cin >> A.name;
-	cout << "\nEnter Age:";
+	cout << "\n\nEnter Age:";
 	cin >> A.age;
-	cout << "\nEnter Level:";
+	cout << "\n\nEnter Level:";
 	cin >> A.level;
-	cout << "\nEnter Post:";
+	cout << "\n\nEnter Post:";
 	cin >> A.post;
-	cout << "\nEnter Email-ID:";
+	cout << "\n\nEnter Email-ID:";
 	email_input(A.id);
-	cout << "\Enter Mobile Number:";
+	cout << "\n\nEnter Mobile Number:";
 	cin >> A.mobile_num;
-	cout << "\nCreate a Username:";
-	inputs(A.username, true, 2, 1, "Username");
-	add_pass(A.password);
-	cout << "\nDescription\n";
-	while (cin) {
-		cin >> descrip;
-		A.description.push_back(descrip);
+	while (true) {
+		vector<string>scrap;
+		cout << "\n\nCreate a Username:";
+		inputs(A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
+		cout << endl << "Username already occupied!!";
 	}
-	cin.clear();
-	ofstream add_data(A.username+".txt");
-	add_data << A.name << '\n' << A.age
-		<< '\n' << A.level << '\n'
-		<< A.post << '\n' << A.id.id << '\n'
-		<< A.mobile_num << '\n';
-	for (int i = 0; i < A.description.size(); ++i) {
-		add_data << A.description[i] << " ";
+		add_pass(A.password);
+		cout << "\n\nDescription\n";
+		while (cin) {
+			cin >> descrip;
+			A.description.push_back(descrip);
+		}
+		cin.clear();
+		ofstream add_data(A.username + ".txt");
+		add_data << A.name << '\n' << A.age
+			<< '\n' << A.level << '\n'
+			<< A.post << '\n' << A.id.id << '\n'
+			<< A.mobile_num << '\n';
+		for (int i = 0; i < A.description.size(); ++i) {
+			add_data << A.description[i] << " ";
+		}
+
+		ofstream add_list("confidentials.txt", ios::app);
+		add_list << "\n" << A.username << ' ' << '='
+			<< ' ' << hex << A.password << ' ' << dec << A.level;
 	}
-
-	ofstream add_list("confidentials.txt", ios::app);
-	add_list << "\n" << A.username << ' ' << '='
-		<< ' ' << hex << A.password << ' ' << dec << A.level;
-	;
-
-}
 void profiles::your_profile() {
 	input_file(A, user());
 	cout << setw(43) << "---Profile---\n";
@@ -316,6 +321,7 @@ void profiles::your_profile() {
 void profiles::delete_profile() {
 	system("cls");
 	string ans,username;
+
 	if (leve() > 6) {
 		input_choice("Do you want to delete you ID or others(your/other)?", ans);
 		if (ans == "your"||ans == "mine") {
@@ -342,28 +348,36 @@ void profiles::delete_profile() {
 			return;
 	}
 
-	remove(username.c_str());
+	string file = username + ".txt";
+	remove(file.c_str());
 	vector<string>data;
 
 	int i = search_from_file_edit(data, "confidentials.txt", username);
+
+	if (i == -1) {
+		cout << "\nRecord of" << username << " not available!!";
+		_getch();
+		return;
+	}
+
 	data.erase(data.begin() + i, data.begin() + (i + 4));
+
 	ofstream write("confidentials.txt");
-	system("pause");
 	for (int j = 0; j < data.size()-1; j+=4) {
 		write << data[j] << " " << data[j + 1] << " " << data[j + 2] << " " << data[j + 3] << endl;
 		}
-	system("pause");
+	if (user() == username)
+		Logout();
 	}
-
 void profiles::edit_profile() {
 	string s;
 	input_file(A, user());
 	system("cls");
-/*	cout << setw(44) << "Edit\n"
+	cout << setw(44) << "Edit\n"
 		<< "\n\n 1. Change username"
 		<< "\n\n 2. Change password"
 		<< "\n\n 3. Edit Description"
-		<< "\n\n 4. ";*/
+		<< "\n\n 4. ";
 }
 void profiles::add_pass(string &p) {
 	string p1, p2;
@@ -401,7 +415,6 @@ void start() {
 	hide_files(true);
 	string s = "external_data.bat";
 	system("cls");
-	system("pause");
 	remove(s.c_str());
 }
 
@@ -433,6 +446,7 @@ void email_input(email& e) {
 }
 void inputs(string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
 	char c;
+	s.clear();         //if the loop login starts again the input fuction does not add password to the old password
 	int alphanumeric_characters = 0, numerics = 0;
 	cin >> c;
 	while (c != ch) {                 //to stop taking inputs once we press enter
@@ -471,6 +485,11 @@ void input_choice(string Question, string &ans) {
 	cin >> ans;
 }
 
+/*void check_input_and_take(string statement,auto data) {
+	while (true) {
+		cout << statement;
+	}
+}*/
 void check_if_superuser() {
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
