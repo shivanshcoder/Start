@@ -1,6 +1,10 @@
 #include<iomanip>
-#include<std_lib_facilities.h>
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<vector>
 #include<conio.h>
+using namespace std;
 
 struct email {
 	string username, domain, id;
@@ -22,6 +26,18 @@ struct Address {
 	string house_num, city, state;
 	int sector;
 };
+struct car_num {
+	char state[2], code[2];
+	int num_ini, num_last;
+};
+struct person {
+	string name, mobile_num;
+	int age;
+	email id;
+	Address home;
+	vector<car_num>cars;
+
+};
 struct Agent {
 	string name, post, username, password,mobile_num;
 	int age, level;
@@ -32,7 +48,11 @@ struct Criminal {
 	string name;
 	int age, level_threat;
 };
+struct suspect {
+	string name;
+	int age;
 
+};
 void start();
 void assign(Agent &a, string username ,int lev);
 void email_input(email &e);
@@ -412,7 +432,7 @@ void profiles::add_pass(string &p) {
 
 void criminals::add_criminals(){
 	system("cls");
-}
+}     
 void criminals::edit_criminals(){
 
 }
@@ -461,6 +481,18 @@ void email_input(email& e) {
 	}
 	e.domain += s;
 	e.id += e.domain;
+}
+void car_num_input(car_num &c) {
+	while (true) {
+		cout << "\nEnter car Number";
+		cin >> c.state[0] >> c.state[1];
+
+		cin >> c.code[0] >> c.code[1];
+		if (c.num_ini % 100 != 0 || c.num_last % 100 != 0) {
+			cout << "\nnumber not vaild";
+			_getch();
+		}
+	}
 }
 void inputs(string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
 	char c;
@@ -533,6 +565,23 @@ void input_int(string statement ,string type ,int &num) {
 		else return;
 	}
 }
+void input_int(long long & num,int digits) {
+	while (true) {
+		long long n = pow(10,digits);
+		cout << n;
+		cin >> num;;
+		cout << endl << num%n;
+		if (!cin) {
+			cout << "Not a int type Input!!";
+			cin.clear();
+			cin.ignore(10000, '\n');
+		}
+		else if (digits != -1&&num%n != num){
+
+		}
+		else return;
+	}
+}
 /*void check_input_and_take(string statement,auto data) {
 	while (true) {
 		cout << statement;
@@ -589,5 +638,8 @@ void hide_files(bool hide) {
 
 }
 int main() {
-	start();
+//	start();
+	long long mobile_num;
+	input_int(mobile_num, 5);
+	_getch();
 }
