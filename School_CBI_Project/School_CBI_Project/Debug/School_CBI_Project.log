@@ -14,7 +14,7 @@ c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_projec
 c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(377): warning C4018: '<': signed/unsigned mismatch
 c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(544): warning C4018: '<': signed/unsigned mismatch
 c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(570): warning C4244: 'initializing': conversion from 'double' to '__int64', possible loss of data
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(621): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(628): warning C4018: '<': signed/unsigned mismatch
 School_Project.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
 fltkd.lib(case.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(case.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
 fltkd.lib(fl_call_main.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_call_main.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info

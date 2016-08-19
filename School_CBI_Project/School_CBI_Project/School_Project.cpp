@@ -567,17 +567,21 @@ void input_int(string statement ,string type ,int &num) {
 }
 void input_int(long long & num,int digits) {
 	while (true) {
-		long long n = pow(10,digits);
-		cout << n;
-		cin >> num;;
-		cout << endl << num%n;
+		cin >> num;
 		if (!cin) {
 			cout << "Not a int type Input!!";
 			cin.clear();
 			cin.ignore(10000, '\n');
 		}
-		else if (digits != -1&&num%n != num){
-
+		else if( digits != -1){
+			int i = 0;
+			while (num != 0) {
+				num = num / 10;
+				++i;
+			}
+			if (i < digits) cout << "More Digits expected";
+			else if (i > digits)cout << "Less Digits expected";
+			else return;
 		}
 		else return;
 	}
@@ -639,7 +643,5 @@ void hide_files(bool hide) {
 }
 int main() {
 //	start();
-	long long mobile_num;
-	input_int(mobile_num, 5);
 	_getch();
 }
