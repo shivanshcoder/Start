@@ -1,5 +1,5 @@
-﻿  Pointers.cpp
-Pointers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+﻿  pointers_drill.cpp
+pointers_drill.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
 fltkd.lib(case.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(case.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
 fltkd.lib(fl_call_main.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_call_main.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
 fltkd.lib(fl_utf.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_utf.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info

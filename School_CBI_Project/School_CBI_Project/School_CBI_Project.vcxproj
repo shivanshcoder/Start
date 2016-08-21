@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Pointers.cpp" />
+    <ClCompile Include="pointers_drill.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{17E04B60-A00F-4381-AB2D-95EA2B26E1D8}</ProjectGuid>
