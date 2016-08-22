@@ -1,9 +1,19 @@
-﻿  pointers_drill.cpp
-pointers_drill.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
-fltkd.lib(case.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(case.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
-fltkd.lib(fl_call_main.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_call_main.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
-fltkd.lib(fl_utf.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_utf.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
-fltkd.lib(fl_utf8.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(fl_utf8.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
-fltkd.lib(is_spacing.obj) : warning LNK4099: PDB 'fltk.pdb' was not found with 'fltkd.lib(is_spacing.obj)' or at 'C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\fltk.pdb'; linking object as if no debug info
+﻿  School_Project.cpp
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(116): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(93): note: see declaration of 'profiles'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(116): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(104): note: see declaration of 'criminals'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(116): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(112): note: see declaration of 'suspects'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(287): warning C4101: 'level': unreferenced local variable
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(287): warning C4101: 'age': unreferenced local variable
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(327): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(377): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(544): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(625): warning C4018: '<': signed/unsigned mismatch
+School_Project.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)

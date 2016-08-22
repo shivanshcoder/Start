@@ -502,7 +502,7 @@ void inputs(string &s, bool alpha, int num_limit, int alpc_limit, string stateme
 	while (c != ch) {                 //to stop taking inputs once we press enter
 		s += c;
 		if (isdigit(c)) ++numerics;   //to check number of numericals
-		if (isalnum(c)) ++alphanumeric_characters;  //to check chec number of alphanumerical words
+		if (c == '!'||c =='@'||c=='$'||c=='&'||c=='*'||c=='%') ++alphanumeric_characters;  //to check chec number of alphanumerical words
 		cin.get(c);
 	}
 	if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
@@ -642,6 +642,6 @@ void hide_files(bool hide) {
 
 }
 int main() {
-//	start();
+	start();
 	_getch();
 }
