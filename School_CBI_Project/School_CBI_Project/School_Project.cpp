@@ -53,6 +53,7 @@ struct suspect {
 	int age;
 
 };
+
 void start();
 void assign(Agent &a, string username ,int lev);
 void email_input(email &e);
@@ -124,6 +125,7 @@ public:
 	void profile_disp();
 	void criminals_disp();
 	void suspects_disp();
+	int disp(vector<string>list, string heading);
 	int choice;
 
 };
@@ -138,9 +140,12 @@ void credentials::Login() {
 	cout << "\n\n\n\n\n\n\n"
 		<< setw(35) << "Login ID:";
 	cin >> A.username;
-	cout << endl << setw(35) << "Password:";
+	if (A.username == "exit") exit(0);
 
+	cout << endl << setw(35) << "Password:";
 	inputs(A.password, false, 0, 0);
+	if (A.password == "exit") exit(0);
+
 	ifstream ifs("confidentials.txt");
 	if (!ifs) cout << "Error!!!";
 	while (true) {
@@ -170,16 +175,20 @@ void credentials::Logout() {
 	return;
 }
 
+int menu::disp(vector<string>list,string heading) {
+	system("cls");
+	cout << setw(44) << heading << endl;
+	for (int i = 0; i < list.size(); ++i) {
+		cout << "\n\n" << i + 1 << ' ' << list[i];
+	}
+	cout << endl;
+	int choice;
+	cin >> choice;
+	return choice;
+}
 void menu::main_disp() {
 	while (true) {
-		system("cls");
-		cout << setw(44) << "CBI\n"
-			<< "\n\n 1. Manage Profiles"
-			<< "\n\n 2. Criminals"
-			<< "\n\n 3. Suspects"
-			<< "\n\n 4. Log Out"
-			<< "\n\n 5. Exit";
-		cin >> choice;
+		choice = disp({ "Manage Profiles","Criminals","Suspects","Log Out","Exit" }, "CBI");
 		switch (choice) {
 		case 1:
 			profile_disp();
@@ -203,13 +212,7 @@ void menu::main_disp() {
 }
 void menu::profile_disp() {
 	while (true) {
-		system("cls");
-		cout << setw(44) << "PROFILES\n"
-			<< "\n\n 1. Your Profile"
-			<< "\n\n 2. Delete Profile"
-			<< "\n\n 3. Add Profile"
-			<< "\n\n 4. Back to Main Menu";
-		cin >> choice;
+		choice = disp({ "Your profile","Delete Profile","Add Profile","Back to Main Menu" }, "PROFILES");
 		switch (choice) {
 		case 1:
 			your_profile();
@@ -229,13 +232,7 @@ void menu::profile_disp() {
 }
 void menu::criminals_disp(){
 	while (true) {
-		system("cls");
-		cout << setw(44) << "Criminals\n"
-			<< "\n\n 1. Search for Criminals"
-			<< "\n\n 2. "
-			<< "\n\n 3. Add Profile"
-			<< "\n\n 4. Back to Main Menu";
-		cin >> choice;
+		choice = disp({ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
 		switch (choice) {
 		case 1:
 			break;
@@ -252,13 +249,7 @@ void menu::criminals_disp(){
 }
 void menu::suspects_disp(){
 	while (true) {
-		system("cls");
-		cout << setw(44) << "Suspects\n"
-			<< "\n\n 1. Your Profile"
-			<< "\n\n 2. Delete Profile"
-			<< "\n\n 3. Add Profile"
-			<< "\n\n 4. Back to Main Menu";
-		cin >> choice;
+		choice = disp({ "" }, "");
 		switch (choice) {
 		case 1:
 			break;
@@ -272,7 +263,7 @@ void menu::suspects_disp(){
 			cout << "Invalid Choice!!";
 		}
 	}
-}
+}      
 
 void profiles::add_profile() {
 	system("cls");

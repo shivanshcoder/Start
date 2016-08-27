@@ -1,19 +1,20 @@
 ﻿  School_Project.cpp
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(116): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(93): note: see declaration of 'profiles'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(116): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(104): note: see declaration of 'criminals'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(116): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(112): note: see declaration of 'suspects'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(287): warning C4101: 'level': unreferenced local variable
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(287): warning C4101: 'age': unreferenced local variable
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(327): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(377): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(544): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(625): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(117): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(69): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(94): note: see declaration of 'profiles'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(117): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(69): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(105): note: see declaration of 'criminals'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(117): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(69): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(113): note: see declaration of 'suspects'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(181): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(279): warning C4101: 'level': unreferenced local variable
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(279): warning C4101: 'age': unreferenced local variable
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(319): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(369): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(536): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(617): warning C4018: '<': signed/unsigned mismatch
 School_Project.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)
