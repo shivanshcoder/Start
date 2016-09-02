@@ -90,4 +90,19 @@ namespace input_functions {
 		return i;
 
 	}
+
+	void hide_files(bool hide) {
+		fstream fs;
+		string file_name = "external_data.bat";
+		fs.open(file_name, ios::out);
+		if (hide)
+			fs << "attrib +r +a +s +h \"*.txt\" /s /d\n"
+			<< "exit";
+		else
+			fs << "attrib -r -a -s -h \"*.txt\" /s /d\n"
+			<< "exit";
+		fs.close();
+		system("start external_data.bat");
+
+	}
 }

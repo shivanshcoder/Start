@@ -14,46 +14,6 @@ namespace Helpers {
 		}
 		return true;
 	}
-	/*
-	void car_num::input() {
-		input_string("Enter car name", car_name);
-		input_string("Enter Car Manufacturer", car_manf);
-		cout << "Enter car number(As written on plate)";
-		cin >> state[0] >> state[1];
-		input_int(num_ini, 2);
-		cin >> code[0] >> code[1];
-		input_int(num_last, 4);
-	}
-
-	void person::input() {
-		input_string("Enter your name:", name);
-		input_int("Enter your Age", "Age", age);
-		id.input();
-		cout << "Enter Mobile Number:";
-		input_int(mobile_num, 10);
-		home.input();
-	}
-	void person::out_file(string name) {}
-	void person::in_file(){}
-
-	void Agent::input() {
-		string descrip;
-		p.input();
-		input_string("Post:", post);
-		input_int("Enter Level:", "Level", level);
-		cout << "\n\nDescription\n";
-		while (cin) {
-			cin >> descrip;
-			description.push_back(descrip);
-		}
-	}
-
-	void Criminal::input() {
-		p.input();
-		cout << "Enter the Criminal Code:";
-		for (int i = 0; i < 10; ++i)cin >> code[0];
-		input_int("Enter the level of Threat(0-9):","Threat level type",level_threat);
-	}*/
 
 	istream& operator >> (istream& is, email& e) {
 		cout << "Enter your Email-ID:";
@@ -62,7 +22,12 @@ namespace Helpers {
 		while (c != '@') {
 			e.username += c;
 			is.get(c);
-			if (!e.check(c, '\n', "@")) return is;
+		
+			if (!e.check(c, '\n', "@")) {
+				e.cls();
+				is >> e;
+				return is;
+			}
 		}
 		e.id += e.username;
 		e.id += '@';
@@ -70,14 +35,19 @@ namespace Helpers {
 		while (c != '.') {
 			e.domain += c;
 			is.get(c);
-			if (!e.check(c, '\n', ".")) return is;
+			if (!e.check(c, '\n', ".")) {
+				e.cls();
+				is >> e;
+				return is;
+			}
 		}
-		e.domain += '.';
 		string s;
 		is >> s;
-		if (s != "com") {
+		if (s != ".com") {
 			e.cls();
-			cout << "'com' Expected!!\n";
+			cout << "'.com' Expected!!\n";
+			is >> e;
+			return is;
 		}
 		e.domain += s;
 		e.id += e.domain;
@@ -88,27 +58,7 @@ namespace Helpers {
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, email& e) {
-		char c;
-		is >> c;
-		while (c != '@') {
-			e.username += c;
-			is.get(c);
-			if (!e.check(c, '\n', "@")) { e.cls(); return is; }
-		}
-		e.id += e.username;
-		e.id += '@';
-		is >> c;
-		while (c != '.') {
-			e.domain += c;
-			is.get(c);
-			if (!e.check(c, '\n', ".")) { e.cls(); return is; }
-		}
-		e.domain += '.';
-		string s;
-		is >> s;
-		if (s != "com") { e.cls(); return is; }
-		e.domain += s;
-		e.id += e.domain;
+		is >> e.id;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, email& e) {
@@ -132,10 +82,6 @@ namespace Helpers {
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, Address& a) {
-//		input_string(is, "", a.house_num);
-//		input_int(is, "", "", a.sector);
-//		input_string(is, "", a.city);
-//		input_string(is, "", a.state);
 		is >> a.house_num >> a.sector >> a.city >> a.state;
 		return is;
 	}
@@ -153,31 +99,35 @@ namespace Helpers {
 		cout << "\nEnter car number(As written on plate):";
 		is >> c.state[0] >> c.state[1]
 			>> c.num_ini[0] >> c.num_ini[1]
-			>> c.code[0] >> c.code[1];
-		input_int(is,c.num_last, 4);
+			>> c.code[0] >> c.code[1] >> c.num_last;
 		return is;
 	}
 	ostream& operator << (ostream& os, car_num& c) {
 		os << "\nCar Name:" << c.car_name
-			<< "\nCar Manufacturers" << c.car_manf
-			<< "\nCar number Plate:" << c.state[0]<<c.state[1]
+			<< "\nCar Manufacturers" << c.car_manf;
+		os<< "\nCar number Plate:" << c.state[0]<<c.state[1]
 			<< c.num_ini[0] << c.num_ini[1] << c.code[0] 
-			<< c.code[1] << c.num_last;
+			<< c.code[1] ;
+		int j = int_length(c.num_last);
+		for (int i = 4; i != j; i--)
+		{
+			os << "0";
+		}
+		os << c.num_last;
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, car_num& c) {
-		input_string(is, "", c.car_name);
-		input_string(is, "", c.car_manf);
+		is>>c.car_name>>c.car_manf;
 		is >> c.state[0] >> c.state[1]
 			>> c.num_ini[0] >> c.num_ini[1];
 		is >> c.code[0] >> c.code[1];
-		input_int(is, c.num_last, 4);
+		is >> c.num_last;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, car_num& c) {
 		os << c.car_name
-			<< " " << c.car_manf
-			<< " " << c.state[0]<<c.state[1]
+			<< " " << c.car_manf;
+		os<< " " << c.state[0]<<c.state[1]
 			<< " " << c.num_ini[0] << c.num_ini[1] 
 			<< " " << c.code[0] << c.code[1] << " " << c.num_last;
 		return os;
@@ -196,14 +146,17 @@ namespace Helpers {
 		os << "\nName:" << p.name
 			<< "\nAge:" << p.age
 			<< "\nMobile Number:" << p.mobile_num
-			<< p.id << p.home << p.cars;
+			<< p.id;
+		os << p.home << p.cars;
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, person& p){
-		input_string(is, "", p.name);
-		input_int(is, "", "", p.age);
-		input_int(is, p.mobile_num, 10);
-		is >> p.id >> p.home >> p.cars;
+		is>>p.name;
+		is>>p.age;
+		is>>p.mobile_num;
+		is >> p.id; 
+		is >> p.home;
+		is >> p.cars;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, person& p){
@@ -220,9 +173,11 @@ namespace Helpers {
 		input_int(is,"Enter Level:", "Level", a.level);
 		input_string(is, "Enter the Post:", a.post);
 		cout << "\nDescription:\n";
+		is >> descrip;
+		a.description.clear();
 		while (is) {
-			is >> descrip;
 			a.description.push_back(descrip);
+			is >> descrip;
 		}
 		is.clear();
 		return is;
@@ -230,26 +185,31 @@ namespace Helpers {
 	ostream& operator << (ostream& os, Agent& a) {
 		os << a.p
 			<< "\nPost:" << a.post
-			<< "\nLevel:" << a.level;
+			<< "\nLevel:" << a.level
+			<< "\nDescription:\n";
 		for (int i = 0; i < a.description.size(); ++i) cout << a.description[i] << " ";
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, Agent& a) {
 		string descrip;
 		is >> a.p;
-		input_int(is, "", "", a.level);
-		input_string(is, "", a.post);
-		while (cin) {
-			cin >> descrip;
+		is >> a.level;
+		is >> a.post;
+		is >> descrip;
+		a.description.clear();
+		while (is) {
 			a.description.push_back(descrip);
+			is >> descrip;
 		}
 		return is;
 	}
 	ofstream& operator << (ofstream& os, Agent& a) { 
+		hide_files(false);
 		os << a.p << "\n" << a.level << "\n" << a.post << "\n";
 		for (int i = 0; i < a.description.size(); ++i) {
 			os << a.description[i] << " ";
 		}
+		hide_files(true);
 		return os; 
 	}
 

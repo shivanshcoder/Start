@@ -8,10 +8,7 @@ using namespace Helpers;
 void start();
 void assign(Agent &a, string username ,int lev);
 
-void input_file(Agent &A, string username);
-void output_file(Agent &A);
 void check_if_superuser();
-void hide_files(bool hide);
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched);
 
 class credentials {
@@ -240,22 +237,23 @@ void profiles::add_profile() {
 		add_pass(A.password);
 		cin.clear();
 		cin >> A;
-		output_file(A);
+		ofstream out(A.username + ".txt");
+		out << A;
+		ofstream ofs;
+		ofs.open("confidentials.txt",ios::app);
+		ofs << endl << A.username << " = " << A.password << A.level;
 	}
 void profiles::your_profile() {
-	input_file(A, user());
-	cout << setw(43) << "---Profile---\n";
-	cout << "Name:" << A.p.name << endl
-		<< "Age:" << A.p.age << endl
-		<< "Level:" << A.level << endl
-		<< "Post:" << A.post << endl
-		<< "Email ID:" << A.p.id.id << endl
-		<< "Mobile Number:" << A.p.mobile_num << endl
-		<< "Description:\n";
-
-	for (int i = 0; i < A.description.size() - 2; ++i) {
-		cout << A.description[i] << " ";
+	system("cls");
+	ifstream input(credentials::A.username + ".txt");
+	if (!input) {
+		cout << "No File Present";
+		_getch();
+		return;
 	}
+	cout << setw(43) << "---Profile---\n";
+	input >> A;
+	cout << A;
 	_getch();
 }
 void profiles::delete_profile() {
@@ -311,7 +309,10 @@ void profiles::delete_profile() {
 	}
 void profiles::edit_profile() {
 	string s;
-	input_file(A, user());
+	cout << credentials::A.username;
+	_getch();
+	ifstream input(credentials::A.username + ".txt");
+	input >> A;
 	system("cls");
 	cout << setw(44) << "Edit\n"
 		<< "\n\n 1. Change username"
@@ -324,25 +325,24 @@ void profiles::edit_profile() {
 		while (true) {
 			vector<string>scrap;
 			cout << "\n\nNew Username:";
-			inputs(cin,A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
+			inputs(cin,A.username, true, 2, 1, "Username"); 
+			if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
 			cout << endl << "Username already occupied!!";
 		}
 		break;
 	case 2: {
 		string s;
 		for (int i = 0; i < 5; ++i) {
-			input_string(cin,"Enter Old Password:", s);
-			cout << credentials::A.password;
-			if (s == A.password) {
+			//input_string(cin,"Enter Old Password:", s);
+			//cout << credentials::A.password;
 				add_pass(A.password);
-				output_file(A);
-				return;
-			}
-			cout << "Password not correct\n";
+				break;
+		//	cout << "Password not correct\n";
 		}
-		_getch();
-		Logout();
-		exit(0);
+		break;
+	//	_getch();
+	//	Logout();
+	//	exit(0);
 	}
 	case 3:
 		while (cin) {
@@ -350,8 +350,10 @@ void profiles::edit_profile() {
 			cin >> s;
 			A.description.push_back(s);
 		}
+		cin.clear();
 	}
-	output_file(A);
+	ofstream output(credentials::A.username + ".txt");
+	output << A;
 }
 void profiles::add_pass(string &p) {
 	string p1, p2;
@@ -388,7 +390,7 @@ void criminals::details_criminals() {
 }
 
 void start() {
-	create_LOG();
+	//create_LOG();
 	check_if_superuser();
 	hide_files(false);
 	menu m(true);
@@ -399,45 +401,6 @@ void start() {
 	system("pause");
 	remove(s.c_str());
 }
-
-void input_file(Agent &A,string username){
-	string descrip;
-	system("cls");
-	ifstream input(username+".txt");
-	if (!input) {
-		cout << "No File Present";
-		_getch();
-		return;
-	}
-	input >> A.p.name >> A.p.age >> A.level
-		>> A.post >> A.p.id.id >> A.p.mobile_num;
-
-	while (input) {
-		input >> descrip;
-		A.description.push_back(descrip);
-	}
-}
-//void input_file(Criminal &C, string name);
-//void input_file(Suspect &S, string name);
-void output_file(Agent &A) {
-	ofstream output(A.username + ".txt");
-	if (!output) {
-		cout << "No File Present";
-		_getch();
-		return;
-	}
-	output << A.p.name << '\n' << A.p.age
-		<< '\n' << A.level << '\n'
-		<< A.post << '\n' << A.p.id.id << '\n'
-		<< A.p.mobile_num << '\n';
-	for (int i = 0; i < A.description.size(); ++i) {
-		output << A.description[i] << " ";
-	}
-
-	ofstream add_list("confidentials.txt", ios::app);
-	output << "\n" << A.username << ' ' << '='
-		<< ' ' << A.password << ' ' << A.level;
-}
 void check_if_superuser() {
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
@@ -445,21 +408,24 @@ void check_if_superuser() {
 		ofstream os1("confidentials.txt", ios::app);
 		os1 << "\nsuperuser = super@user123 10";
 		ofstream os2("superuser.txt");
-		os2 << "superuser\n"
-			<< "17\n" << "10\n"
-			<< "creator\n" << "mathurshiva90a@gmail.com\n"
-			<< "+919041128703\n"
-			<< "I Created this Program";
+		os2 << "Shivansh\n"
+			<< "17\n"
+			<< "9041128703\n"
+			<< "mathurshiva90a@gmail.com\n"
+			<< "1180 7 Chandigarh Chandigarh\n"
+			<< "WagonR Maruti CH 01 AS 7557\n"
+			<< "7\n"
+			<< "HEAD\n"
+			<< "I am Developing this program program\n";
 	}
 	else
 		return;
 }
 void assign(Agent &a, string username, int lev) {
 	a.username = username;
-
 	a.level = lev;
-	ifstream input(username);
-	input >> a.p.name >> a.p.age >> a.level >> a.post;
+	ifstream input(username+".txt");
+	input >> a;
 }
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched) {
 	ifstream fs(file);
@@ -475,33 +441,6 @@ int search_from_file_edit(vector<string>&data, string file, string to_be_searche
 	return i;
 }
 
-void hide_files(bool hide) {
-	fstream fs;
-	string file_name = "external_data.bat";
-	fs.open(file_name, ios::out);
-	if(hide)
-	fs << "attrib +r +a +s +h \"*.txt\" /s /d\n"
-		<< "exit";
-	else
-		fs << "attrib -r -a -s -h \"*.txt\" /s /d\n"
-		    << "exit";
-	fs.close();
-	system("start external_data.bat");
-
-}
 int main() {
-	//start();
-	Agent a,b;
-	ifstream fs;
-	fs.open("Hell.txt");
-	fs >> a;
-	_getch();
-	fs.close();
-	ifstream ifs;
-	ifs.open("Hell.txt");
-	ifs >> b;
-	_getch();
-	cout << b;
-	_getch();
-
+	start();
 }

@@ -32,7 +32,6 @@ namespace Helpers {
 		char state[2], code[2];
 		char num_ini[2];
 		int num_last;
-		void input();
 	};
 	struct person {
 		string name;

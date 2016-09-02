@@ -13,6 +13,8 @@ namespace input_functions{
 	int int_length(int num);
 	int long_length(long long num);
 
+	void hide_files(bool hide);
+
 	void input_int(istream& io,string statement, string type, int &num);
 	void input_int(istream& io,long long& num, int digits);
 	void input_int(istream& io,int& num, int digits);
