@@ -9,10 +9,10 @@ c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_projec
   c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(17): note: see declaration of 'credentials'
   c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(61): note: see declaration of 'suspects'
 c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(136): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(257): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(307): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(434): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(475): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(256): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(306): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(433): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(474): warning C4018: '<': signed/unsigned mismatch
 Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)

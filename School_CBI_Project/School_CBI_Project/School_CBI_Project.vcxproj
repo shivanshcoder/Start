@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helpers.cpp" />
+    <ClCompile Include="input_functions.cpp" />
     <ClCompile Include="School_Project.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="input_functions.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{17E04B60-A00F-4381-AB2D-95EA2B26E1D8}</ProjectGuid>

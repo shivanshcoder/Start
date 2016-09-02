@@ -91,7 +91,7 @@ void credentials::Login() {
 	if (A.username == "exit") exit(0);
 
 	cout << endl << setw(35) << "Password:";
-	inputs(A.password, false, 0, 0);
+	inputs(cin,A.password, false, 0, 0);
 	if (A.password == "exit") exit(0);
 
 	ifstream ifs("confidentials.txt");
@@ -231,16 +231,15 @@ void profiles::add_profile() {
 		system("pause");
 		return;
 	}
-	
 	while (true) {
 		vector<string>scrap;
 		cout << "\n\nCreate a Username:";
-		inputs(A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
+		inputs(cin,A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
 		cout << endl << "Username already occupied!!";
 	}
 		add_pass(A.password);
-		A.input();
 		cin.clear();
+		cin >> A;
 		output_file(A);
 	}
 void profiles::your_profile() {
@@ -264,9 +263,9 @@ void profiles::delete_profile() {
 	string ans,username;
 
 	if (leve() > 6) {
-		input_string("Do you want to delete you ID or others(your/other)?", ans);
+		input_string(cin,"Do you want to delete you ID or others(your/other)?", ans);
 		if (ans == "your"||ans == "mine") {
-			input_string("Are you sure(yes/no)",ans);
+			input_string(cin,"Are you sure(yes/no)",ans);
 			if (ans == "yes")
 				username = user();
 			else
@@ -282,7 +281,7 @@ void profiles::delete_profile() {
 		}
 	}
 	else {
-		input_string("Are you sure(yes/no)", ans);
+		input_string(cin,"Are you sure(yes/no)", ans);
 		if (ans == "yes")
 			username = user();
 		else
@@ -325,14 +324,14 @@ void profiles::edit_profile() {
 		while (true) {
 			vector<string>scrap;
 			cout << "\n\nNew Username:";
-			inputs(A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
+			inputs(cin,A.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
 			cout << endl << "Username already occupied!!";
 		}
 		break;
 	case 2: {
 		string s;
 		for (int i = 0; i < 5; ++i) {
-			input_string("Enter Old Password:", s);
+			input_string(cin,"Enter Old Password:", s);
 			cout << credentials::A.password;
 			if (s == A.password) {
 				add_pass(A.password);
@@ -357,9 +356,9 @@ void profiles::edit_profile() {
 void profiles::add_pass(string &p) {
 	string p1, p2;
 	cout << "\nEnter password:";
-	inputs(p1, true, 3, 2, "Password");
+	inputs(cin,p1, true, 3, 2, "Password");
 	cout << "\nRe-Enter password:";
-	inputs(p2, true, 3, 2, "Password");
+	inputs(cin,p2, true, 3, 2, "Password");
 	if (p1 != p2) {
 		cout << "\npasswords dont match!!";
 		_getch();
@@ -400,7 +399,7 @@ void start() {
 	system("pause");
 	remove(s.c_str());
 }
-
+/*
 void input_file(Agent &A,string username){
 	string descrip;
 	system("cls");
@@ -439,7 +438,7 @@ void output_file(Agent &A) {
 	output << "\n" << A.username << ' ' << '='
 		<< ' ' << A.password << ' ' << A.level;
 }
-
+*/
 void check_if_superuser() {
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
@@ -492,5 +491,18 @@ void hide_files(bool hide) {
 
 }
 int main() {
-	start();
+	//start();
+	Agent a,b;
+	cin >> a;
+	ofstream fs;
+	fs.open("Hell.txt");
+	fs << a;
+	_getch();
+	fs.close();
+	ifstream ifs;
+	ifs.open("Hell.txt");
+	ifs >> b;
+	_getch();
+	cout << b;
+	_getch();
 }
