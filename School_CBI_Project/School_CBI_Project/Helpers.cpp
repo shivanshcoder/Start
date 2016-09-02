@@ -188,9 +188,8 @@ namespace Helpers {
 		input_string(is, "Enter Name:", p.name);
 		input_int(is, "\nEnter Age:", "Age", p.age);
 		cout << "\nEnter Mobile:";
-		cout << endl;
 		input_int(is, p.mobile_num, 10);
-		cin >> p.id >> p.home >> p.cars;
+		is >> p.id >> p.home >> p.cars;
 		return is;
 	}
 	ostream& operator << (ostream& os, person& p){
@@ -204,13 +203,14 @@ namespace Helpers {
 		input_string(is, "", p.name);
 		input_int(is, "", "", p.age);
 		input_int(is, p.mobile_num, 10);
-		cin >> p.id >> p.home >> p.cars;
+		is >> p.id >> p.home >> p.cars;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, person& p){
-		os << p.name << "\n" << p.age << "\n"
-			<< p.mobile_num << "\n" << p.id << "\n"
-			<< p.home << "\n"<< p.cars;
+		os << p.name << "\n" << p.age << "\n" << p.mobile_num << "\n";
+		os << p.id << "\n";
+		os << p.home << "\n";
+		os<< p.cars;
 		return os;
 	}
 
@@ -219,7 +219,7 @@ namespace Helpers {
 		is >> a.p;
 		input_int(is,"Enter Level:", "Level", a.level);
 		input_string(is, "Enter the Post:", a.post);
-		cout << "\n\nDescription:\n";
+		cout << "\nDescription:\n";
 		while (is) {
 			is >> descrip;
 			a.description.push_back(descrip);

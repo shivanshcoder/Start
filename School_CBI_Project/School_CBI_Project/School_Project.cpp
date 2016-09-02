@@ -399,7 +399,7 @@ void start() {
 	system("pause");
 	remove(s.c_str());
 }
-/*
+
 void input_file(Agent &A,string username){
 	string descrip;
 	system("cls");
@@ -417,8 +417,8 @@ void input_file(Agent &A,string username){
 		A.description.push_back(descrip);
 	}
 }
-void input_file(Criminal &C, string name);
-void input_file(Suspect &S, string name);
+//void input_file(Criminal &C, string name);
+//void input_file(Suspect &S, string name);
 void output_file(Agent &A) {
 	ofstream output(A.username + ".txt");
 	if (!output) {
@@ -438,7 +438,6 @@ void output_file(Agent &A) {
 	output << "\n" << A.username << ' ' << '='
 		<< ' ' << A.password << ' ' << A.level;
 }
-*/
 void check_if_superuser() {
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
@@ -493,10 +492,9 @@ void hide_files(bool hide) {
 int main() {
 	//start();
 	Agent a,b;
-	cin >> a;
-	ofstream fs;
+	ifstream fs;
 	fs.open("Hell.txt");
-	fs << a;
+	fs >> a;
 	_getch();
 	fs.close();
 	ifstream ifs;
@@ -505,4 +503,5 @@ int main() {
 	_getch();
 	cout << b;
 	_getch();
+
 }

@@ -1,18 +1,3 @@
-﻿  School_Project.cpp
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(65): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(17): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(42): note: see declaration of 'profiles'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(65): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(17): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(53): note: see declaration of 'criminals'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(65): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(17): note: see declaration of 'credentials'
-  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(61): note: see declaration of 'suspects'
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(136): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(256): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(306): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(433): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(474): warning C4018: '<': signed/unsigned mismatch
-Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+﻿Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)
