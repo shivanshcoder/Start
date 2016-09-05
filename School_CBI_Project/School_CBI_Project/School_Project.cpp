@@ -30,8 +30,12 @@ protected:
 	bool granted() { return eligibility; }
 	string user() { return A.username; }
 	int leve() { return A.level; }
+
 	void Login();
 	void Logout();
+	void confidentials();
+	
+	int disp(vector<string>list, string heading);
 	bool eligibility;
 
 
@@ -41,9 +45,11 @@ public:
 	profiles(string username, int lev) :credentials(username, lev) {}
 protected:
 	void add_profile();
+	void add_assets();
 	void your_profile();
 	void delete_profile();
 	void edit_profile();
+	void other_profile();
 	void add_pass(string &p);
 	Agent A;
 };
@@ -63,14 +69,16 @@ class menu : private credentials, profiles, criminals, suspects{
 public:
 	menu(bool to_displayornot) : credentials(to_displayornot),profiles(credentials::user(),credentials::leve()),
 		criminals(credentials::user(), credentials::leve()), suspects(credentials::user(), credentials::leve()) {
-	if (credentials::granted())
+		if (credentials::granted()) {
+			cout << "HELLO";
 			main_disp();
+		}
 }
+
 	void main_disp();
 	void profile_disp();
 	void criminals_disp();
 	void suspects_disp();
-	int disp(vector<string>list, string heading);
 	int choice;
 
 };
@@ -114,6 +122,7 @@ void credentials::Login() {
 		}
 
 	}
+	_getch();
 }
 void credentials::Logout() {
 	system("cls");
@@ -126,8 +135,23 @@ void credentials::Logout() {
 	start();
 	return;
 }
-
-int menu::disp(vector<string>list,string heading) {
+void credentials::confidentials() {
+	ifstream input("confidentials.txt");
+	vector<string>users;
+	vector<string>pass;
+	string u, p;
+	int n;
+	vector<int>power;
+	char c;
+	input >> p >> c >> p >> n;
+	while (input) {
+		users.push_back(u);
+		pass.push_back(p);
+		power.push_back(n);
+		input >> p >> c >> p >> n;
+	}
+}
+int credentials::disp(vector<string>list, string heading) {
 	system("cls");
 	cout << setw(44) << heading << endl;
 	for (int i = 0; i < list.size(); ++i) {
@@ -138,9 +162,10 @@ int menu::disp(vector<string>list,string heading) {
 	cin >> choice;
 	return choice;
 }
+
 void menu::main_disp() {
 	while (true) {
-		choice = disp({ "Manage Profiles","Criminals","Suspects","Log Out","Exit" }, "CBI");
+		choice = credentials::disp({ "Manage Profiles","Criminals","Suspects","Log Out","Exit" }, "CBI");
 		switch (choice) {
 		case 1:
 			profile_disp();
@@ -164,7 +189,7 @@ void menu::main_disp() {
 }
 void menu::profile_disp() {
 	while (true) {
-		choice = disp({ "Your profile","Delete Profile","Add Profile","Edit Profile", "Back to Main Menu" }, "PROFILES");
+		choice = credentials::disp({ "Your profile","Delete Profile","Add Profile","Edit Profile", "Back to Main Menu" }, "PROFILES");
 		switch (choice) {
 		case 1:
 			your_profile();
@@ -187,7 +212,7 @@ void menu::profile_disp() {
 }
 void menu::criminals_disp(){
 	while (true) {
-		choice = disp({ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
+		choice = credentials::disp({ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
 		switch (choice) {
 		case 1:
 			break;
@@ -204,7 +229,7 @@ void menu::criminals_disp(){
 }
 void menu::suspects_disp(){
 	while (true) {
-		choice = disp({ "" }, "");
+		choice = credentials::disp({ "" }, "");
 		switch (choice) {
 		case 1:
 			break;
@@ -241,7 +266,7 @@ void profiles::add_profile() {
 		out << A;
 		ofstream ofs;
 		ofs.open("confidentials.txt",ios::app);
-		ofs << endl << A.username << " = " << A.password << A.level;
+		ofs << endl << A.username << " = " << A.password << " " << A.level;
 	}
 void profiles::your_profile() {
 	system("cls");
@@ -309,28 +334,11 @@ void profiles::delete_profile() {
 	}
 void profiles::edit_profile() {
 	string s;
-	cout << credentials::A.username;
-	_getch();
 	ifstream input(credentials::A.username + ".txt");
 	input >> A;
-	system("cls");
-	cout << setw(44) << "Edit\n"
-		<< "\n\n 1. Change username"
-		<< "\n\n 2. Change password"
-		<< "\n\n 3. Edit Description";
-	int choice;
-	cin >> choice;
+	int choice = credentials::disp({"Change password","Edit Description","Add Assets"}, "Edit");
 	switch (choice){
-	case 1:
-		while (true) {
-			vector<string>scrap;
-			cout << "\n\nNew Username:";
-			inputs(cin,A.username, true, 2, 1, "Username"); 
-			if (search_from_file_edit(scrap, "confidentials.txt", A.username) == -1) break;
-			cout << endl << "Username already occupied!!";
-		}
-		break;
-	case 2: {
+	case 1: {
 		string s;
 		for (int i = 0; i < 5; ++i) {
 			//input_string(cin,"Enter Old Password:", s);
@@ -344,16 +352,39 @@ void profiles::edit_profile() {
 	//	Logout();
 	//	exit(0);
 	}
-	case 3:
+	case 2:
 		while (cin) {
 			string s;
 			cin >> s;
 			A.description.push_back(s);
 		}
 		cin.clear();
+		break;
+	case 3:
+		add_assets();
+			break;
 	}
 	ofstream output(credentials::A.username + ".txt");
 	output << A;
+}
+void profiles::add_assets() {
+	int choice = credentials::disp({ "Add House","Add Car" }, "Add Assets");
+	switch (choice) {
+	case 1: {
+		Address a;
+		cin >> a;
+		A.p.home.push_back(a);
+		ofstream out(A.username + ".txt");
+		out << A;
+	}
+	case 2: {
+		car_num c;
+		cin >> c;
+		A.car.push_back(c);
+		ofstream out(A.username + ".txt");
+		out << A;
+	}
+	}
 }
 void profiles::add_pass(string &p) {
 	string p1, p2;
@@ -372,6 +403,16 @@ void profiles::add_pass(string &p) {
 		add_pass(p);
 	}
 	p = p2;
+}
+void profiles::other_profile(){
+	system("cls");
+	if (leve() < 5) {
+		cout << "You are not Authorised!";
+		_getch();
+		return;
+	}
+	cout << setw(44) << "Search Agents" << endl;
+
 }
 
 void criminals::add_criminals(){
@@ -413,7 +454,7 @@ void check_if_superuser() {
 			<< "9041128703\n"
 			<< "mathurshiva90a@gmail.com\n"
 			<< "1180 7 Chandigarh Chandigarh\n"
-			<< "WagonR Maruti CH 01 AS 7557\n"
+			<< "WagonR Maruti Silver CH 01 AS 7557\n"
 			<< "7\n"
 			<< "HEAD\n"
 			<< "I am Developing this program program\n";

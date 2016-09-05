@@ -1,7 +1,6 @@
 
 #include"input_functions.h"
 
-namespace input_functions {
 
 	void inputs(istream& io, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
 		char c;
@@ -22,9 +21,25 @@ namespace input_functions {
 			inputs(io, s, true);
 		}  //to  check strength of password usually
 	}
+
 	void input_string(istream& io, string Question, string &ans) {
 		cout << Question;
 		io >> ans;
+	}
+
+	void input_int(istream& io, int& num) {
+		io >> num;
+		if (!io) {
+			io.clear();
+			io.ignore(1000, '\n');
+		}
+	}
+	void input_int(istream& io, long long& num) {
+		io >> num;
+		if (!io) {
+			io.clear();
+			io.ignore(1000, '\n');
+		}
 	}
 	void input_int(istream& io, string statement, string type, int &num) {
 		while (true) {
@@ -105,4 +120,59 @@ namespace input_functions {
 		system("start external_data.bat");
 
 	}
+
+
+	namespace encryption {
+	void output_char(ofstream& os, char s, int z) {
+		int a = s;
+		a += z;
+		s = a;
+		os << s;
+	}
+	void input_char(ifstream& is, char& s, int z) {
+		is >> s;
+		cout << s;
+		if (s == ' ') {
+			cout << "asfafglo";
+			_getch();
+			return;
+		}
+		int a = s;
+		a = a - z;
+		s = a;
+		cout << s << endl;
+	}
+
+	void output_str(ofstream& os, string s, int z) {
+		for (int i = 0; i < s.size(); ++i) {
+			output_char(os, s[i], z);
+		}
+	}
+	void input_str(ifstream& is, string& s, int z) {
+		is >> s;
+		for (int i = 0; i < s.size(); ++i) {
+			int n = s[i];
+			n -= z;
+			s[i] = n;
+		}
+	}
+
+	void output_line(ofstream& os, vector<string>s, int z) {
+		for (int i = 0; i < s.size(); ++i) {
+			output_str(os, s[i], z);
+			os << " ";
+		}
+	}
+	void input_line(ifstream& is, vector<string>&s, int z) {    //need to tackle with svector pointer
+		string c;
+		input_str(is, c, z);
+		//	cout << c;
+		while (is) {
+			//	cout << c;
+			s.push_back(c);
+			input_str(is, c, z);
+
+		}
+	}
+
 }

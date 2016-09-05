@@ -41,11 +41,12 @@ namespace Helpers {
 				return is;
 			}
 		}
+		e.id += '.';
 		string s;
 		is >> s;
-		if (s != ".com") {
+		if (s != "com") {
 			e.cls();
-			cout << "'.com' Expected!!\n";
+			cout << "'com' Expected!!\n";
 			is >> e;
 			return is;
 		}
@@ -82,7 +83,9 @@ namespace Helpers {
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, Address& a) {
-		is >> a.house_num >> a.sector >> a.city >> a.state;
+		is >> a.house_num;
+		input_int(is, a.sector);
+		is >> a.city >> a.state;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, Address& a) {
@@ -94,8 +97,9 @@ namespace Helpers {
 	}
 
 	istream& operator >> (istream& is, car_num& c) {
-		input_string(is,"\nEnter car name:", c.car_name);
+		input_string(is,"\nEnter Car name:", c.car_name);
 		input_string(is,"\nEnter Car Manufacturer:", c.car_manf);
+		input_string(is, "\nEnter Car Colour:", c.color);
 		cout << "\nEnter car number(As written on plate):";
 		is >> c.state[0] >> c.state[1]
 			>> c.num_ini[0] >> c.num_ini[1]
@@ -104,7 +108,8 @@ namespace Helpers {
 	}
 	ostream& operator << (ostream& os, car_num& c) {
 		os << "\nCar Name:" << c.car_name
-			<< "\nCar Manufacturers" << c.car_manf;
+			<< "\nCar Manufacturers" << c.car_manf
+			<< "\nCar Color:" << c.color;
 		os<< "\nCar number Plate:" << c.state[0]<<c.state[1]
 			<< c.num_ini[0] << c.num_ini[1] << c.code[0] 
 			<< c.code[1] ;
@@ -117,16 +122,17 @@ namespace Helpers {
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, car_num& c) {
-		is>>c.car_name>>c.car_manf;
+		is>>c.car_name>>c.car_manf>>c.color;
 		is >> c.state[0] >> c.state[1]
 			>> c.num_ini[0] >> c.num_ini[1];
 		is >> c.code[0] >> c.code[1];
-		is >> c.num_last;
+		input_int(is, c.num_last);
 		return is;
 	}
 	ofstream& operator << (ofstream& os, car_num& c) {
-		os << c.car_name
-			<< " " << c.car_manf;
+		os << c.car_name << " "
+			<< c.car_manf << " "
+			<< c.color << " ";
 		os<< " " << c.state[0]<<c.state[1]
 			<< " " << c.num_ini[0] << c.num_ini[1] 
 			<< " " << c.code[0] << c.code[1] << " " << c.num_last;
@@ -137,9 +143,16 @@ namespace Helpers {
 	istream& operator >> (istream& is, person& p){
 		input_string(is, "Enter Name:", p.name);
 		input_int(is, "\nEnter Age:", "Age", p.age);
+		while (p.age > 130 || p.age < 1) {
+			cout << "Age not appropriate!!";
+			input_int(is, "\nEnter  Age:", "Age", p.age);
+		}
 		cout << "\nEnter Mobile:";
 		input_int(is, p.mobile_num, 10);
-		is >> p.id >> p.home >> p.cars;
+		is >> p.id;
+		Address a;
+		is >> a;
+		p.home.push_back(a);
 		return is;
 	}
 	ostream& operator << (ostream& os, person& p){
@@ -147,23 +160,29 @@ namespace Helpers {
 			<< "\nAge:" << p.age
 			<< "\nMobile Number:" << p.mobile_num
 			<< p.id;
-		os << p.home << p.cars;
+		for (int i = 0; i < p.home.size(); ++i)os << p.home[i];
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, person& p){
 		is>>p.name;
-		is>>p.age;
-		is>>p.mobile_num;
-		is >> p.id; 
-		is >> p.home;
-		is >> p.cars;
+		input_int(is, p.age);
+		input_int(is,p.mobile_num);
+		is >> p.id;
+		int j;
+		is >> j;
+		for (int i = 0; i < j; ++i) {
+			Address a;
+			is >> a;
+			p.home.push_back(a);
+		}
 		return is;
 	}
 	ofstream& operator << (ofstream& os, person& p){
 		os << p.name << "\n" << p.age << "\n" << p.mobile_num << "\n";
 		os << p.id << "\n";
-		os << p.home << "\n";
-		os<< p.cars;
+		os << p.home.size()<< "\n" ;
+		for (int i = 0; i < p.home.size(); ++i)
+			os << p.home[i] << "\n";
 		return os;
 	}
 
@@ -172,6 +191,9 @@ namespace Helpers {
 		is >> a.p;
 		input_int(is,"Enter Level:", "Level", a.level);
 		input_string(is, "Enter the Post:", a.post);
+		car_num c;
+		is >> c;
+		a.car.push_back(c);
 		cout << "\nDescription:\n";
 		is >> descrip;
 		a.description.clear();
@@ -183,17 +205,23 @@ namespace Helpers {
 		return is;
 	}
 	ostream& operator << (ostream& os, Agent& a) {
-		os << a.p
-			<< "\nPost:" << a.post
-			<< "\nLevel:" << a.level
-			<< "\nDescription:\n";
+		os << a.p;
+		os << "\nPost:" << a.post
+			<< "\nLevel:" << a.level;
+		for (int i = 0; i<a.car.size(); ++i)
+				os << endl << a.car[i];
+		os << "\nDescription:\n";
 		for (int i = 0; i < a.description.size(); ++i) cout << a.description[i] << " ";
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, Agent& a) {
 		string descrip;
 		is >> a.p;
-		is >> a.level;
+		int j;
+		is >> j;
+		for(int i =0;i<j;++i)
+		is >> a.car[i];
+		input_int(is,a.level);
 		is >> a.post;
 		is >> descrip;
 		a.description.clear();
@@ -205,7 +233,10 @@ namespace Helpers {
 	}
 	ofstream& operator << (ofstream& os, Agent& a) { 
 		hide_files(false);
-		os << a.p << "\n" << a.level << "\n" << a.post << "\n";
+		os << a.p;
+		os << "\n" << a.level << "\n" << a.post << "\n";
+		os << a.car.size() << endl;
+		for (int i = 0; i < a.car.size(); ++i) os << a.car[i] << endl;
 		for (int i = 0; i < a.description.size(); ++i) {
 			os << a.description[i] << " ";
 		}

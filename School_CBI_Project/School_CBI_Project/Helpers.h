@@ -10,7 +10,7 @@
 #include"input_functions.h"
 
 using namespace std;
-using namespace input_functions;
+using namespace encryption;
 
 namespace Helpers {
 
@@ -29,6 +29,7 @@ namespace Helpers {
 	};
 	struct car_num {
 		string car_name, car_manf;
+		string color;
 		char state[2], code[2];
 		char num_ini[2];
 		int num_last;
@@ -38,29 +39,26 @@ namespace Helpers {
 		long long mobile_num;
 		int age;
 		email id;
-		Address home;
-		car_num cars;
-		void input();
-		void out_file(string name);
-		void in_file();
+		vector<Address>home;
 	};
 	struct Agent {
+		vector<car_num>car;
 		person p;
 		string post, username, password;
 		int level;
 		vector<string>description;
-		//void input();
 	};
 	struct Criminal {
+		vector<car_num>cars;
+		vector<Address>homes;
 		person p;
 		char code[10];
 		int level_threat;
-		void input();
 	};
 	struct Suspect {
 		person p;
+		vector<car_num>cars;
 		vector<string>cause;
-		void input();
 	};
 
 	istream& operator >> (istream& is, email& e);
