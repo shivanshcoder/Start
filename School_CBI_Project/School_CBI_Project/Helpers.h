@@ -24,8 +24,7 @@ namespace Helpers {
 		bool check(char c, char termin, string s);
 	};
 	struct Address {
-		string house_num, city, state;
-		int sector;
+		string house_num, city, state,sector;
 	};
 	struct car_num {
 		string car_name, car_manf;

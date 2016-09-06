@@ -123,56 +123,100 @@
 
 
 	namespace encryption {
-	void output_char(ofstream& os, char s, int z) {
-		int a = s;
-		a += z;
-		s = a;
-		os << s;
-	}
-	void input_char(ifstream& is, char& s, int z) {
-		is >> s;
-		cout << s;
-		if (s == ' ') {
-			cout << "asfafglo";
-			_getch();
-			return;
-		}
-		int a = s;
-		a = a - z;
-		s = a;
-		cout << s << endl;
-	}
 
-	void output_str(ofstream& os, string s, int z) {
-		for (int i = 0; i < s.size(); ++i) {
-			output_char(os, s[i], z);
+		void input_num(ifstream& is, int& n, int z,int digit) {
+			char c;
+			int a, h;
+			n = 0;
+			z += 90;
+			for (int i = 0; i < digit; ++i) {
+				is >> c;
+				a = c;
+				a -= z;
+				char r = a;
+				h = r;
+				n = n + pow(10, i)*h;
+			}
+		}     //to be tested
+		void output_num(ofstream& os, int n, int z,int digit) {
+			for (int i = digit; i >0; --i) {
+				int m = n % 10;
+				n /= 10;
+				m = m + z + 90;
+				char c = m;
+				os << c;
+			}
+			os << ' ';
 		}
-	}
-	void input_str(ifstream& is, string& s, int z) {
-		is >> s;
-		for (int i = 0; i < s.size(); ++i) {
-			int n = s[i];
-			n -= z;
-			s[i] = n;
-		}
-	}
 
-	void output_line(ofstream& os, vector<string>s, int z) {
-		for (int i = 0; i < s.size(); ++i) {
-			output_str(os, s[i], z);
+		void input_num(ifstream& is, long long& n, int z, int digit) {
+			char c;
+			int a, h;
+			n = 0;
+			z += 90;
+			for (int i = 0; i < digit; ++i) {
+				is >> c;
+				a = c;
+				a -= z;
+				char r = a;
+				h = r;
+				n = n + pow(10, i)*h;
+			}
+
+
+		}     //to be tested
+		void output_num(ofstream& os, long long n, int z, int digit) {
+			for (int i = digit; i >0; --i) {
+				int m = n % 10;
+				n /= 10;
+				m = m + z + 90;
+				char c = m;
+				os << c;
+			}
+			os << ' ';
+		}    //to be tested
+
+		void output_char(ofstream& os, char s, int z) {
+			int a = s;
+			a += z;
+			s = a;
+			os << s;
+		}
+		void input_char(ifstream& is, char& s, int z) {
+			is >> s;
+			int a = s;
+			a = a - z;
+			s = a;
+		}
+
+		void output_str(ofstream& os, string s, int z) {
+			for (int i = 0; i < s.size(); ++i) {
+				output_char(os, s[i], z);
+			}
 			os << " ";
 		}
-	}
-	void input_line(ifstream& is, vector<string>&s, int z) {    //need to tackle with svector pointer
-		string c;
-		input_str(is, c, z);
-		//	cout << c;
-		while (is) {
-			//	cout << c;
-			s.push_back(c);
-			input_str(is, c, z);
-
+		void input_str(ifstream& is, string& s, int z) {
+			is >> s;
+			for (int i = 0; i < s.size(); ++i) {
+				int n = s[i];
+				n -= z;
+				s[i] = n;
+			}
 		}
-	}
 
-}
+		void output_line(ofstream& os, vector<string>s, int z) {
+			for (int i = 0; i < s.size(); ++i) {
+				output_str(os, s[i], z);
+			}
+		}
+		void input_line(ifstream& is, vector<string>&s, int z) {    //need to tackle with vector pointer
+			string c;
+			input_str(is, c, z);
+			while (is) {
+				s.push_back(c);
+				input_str(is, c, z);
+
+			}
+		}
+
+	}
