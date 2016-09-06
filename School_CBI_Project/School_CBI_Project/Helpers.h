@@ -1,12 +1,5 @@
 #pragma once
 
-#include<iostream>
-#include<vector>
-#include<string>
-#include<iomanip>
-#include<fstream>
-#include<istream>
-#include<conio.h>
 #include"input_functions.h"
 
 using namespace std;

@@ -37,4 +37,6 @@ using namespace std;
 
 		void input_line(ifstream& is, vector<string>&s, int z);
 		void output_line(ofstream& os, vector<string> s, int z);
+
+		string encrypt(string s,int z);
 }

@@ -102,10 +102,14 @@ void credentials::Login() {
 	ifstream ifs("confidentials.txt");
 	if (!ifs) cout << "Error!!!";
 	while (true) {
-		ifs >> id_real >> c >> id_passs >> leve;
-
+		input_str(ifs, id_real, 100);
+		input_char(ifs, c, 100);
+		input_str(ifs, id_passs, 100);
+		input_num(ifs, leve, 100,1);
 		if (!ifs) {
 			eligibility = false;
+			cout << setw(40) << "Wrong Password!";
+			_getch();
 			return;
 		}
 
@@ -114,10 +118,12 @@ void credentials::Login() {
 			A.level = leve;
 			system("cls");
 			ifs.close();
-			fstream f;
-			f.open("LOG.txt",ios::app);
+			/*fstream f;
+			system("start LOG.txt");
+			system("taskill /F /IM notepad.exe");
+			f.open("LOG.txt", ios::app);
 			f << endl << A.username;
-			f.close();
+			f.close();*/
 			return;
 		}
 
@@ -262,15 +268,21 @@ void profiles::add_profile() {
 		add_pass(A.password);
 		cin.clear();
 		cin >> A;
-		ofstream out(A.username + ".txt");
+		ofstream out(encrypt(A.username,100) + ".txt");
 		out << A;
 		ofstream ofs;
 		ofs.open("confidentials.txt",ios::app);
-		ofs << endl << A.username << " = " << A.password << " " << A.level;
+		output_str(ofs, A.username, 100);
+		output_char(ofs, '=', 100);
+		output_str(ofs, A.password, 100);
+		ofs << " ";
+		output_num(ofs, A.level, 100, 1);
 	}
 void profiles::your_profile() {
 	system("cls");
-	ifstream input(credentials::A.username + ".txt");
+	cout << credentials::A.username<<encrypt(credentials::A.username, 100);
+	_getch();
+	ifstream input(encrypt(credentials::A.username,100) + ".txt");
 	if (!input) {
 		cout << "No File Present";
 		_getch();
@@ -345,7 +357,6 @@ void profiles::edit_profile() {
 			//cout << credentials::A.password;
 				add_pass(A.password);
 				break;
-		//	cout << "Password not correct\n";
 		}
 		break;
 	//	_getch();
@@ -364,7 +375,7 @@ void profiles::edit_profile() {
 		add_assets();
 			break;
 	}
-	ofstream output(credentials::A.username + ".txt");
+	ofstream output(encrypt(credentials::A.username,100) + ".txt");
 	output << A;
 }
 void profiles::add_assets() {
@@ -374,15 +385,11 @@ void profiles::add_assets() {
 		Address a;
 		cin >> a;
 		A.p.home.push_back(a);
-		ofstream out(A.username + ".txt");
-		out << A;
 	}
 	case 2: {
 		car_num c;
 		cin >> c;
 		A.car.push_back(c);
-		ofstream out(A.username + ".txt");
-		out << A;
 	}
 	}
 }
@@ -444,21 +451,16 @@ void start() {
 }
 void check_if_superuser() {
 	vector<string>data;
-	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
+	int i = search_from_file_edit(data, "confidentials.txt", "×ÙÔÉÖÙ×ÉÖ");
 	if (i == -1) {
 		ofstream os1("confidentials.txt", ios::app);
-		os1 << "\nsuperuser = super@user123 10";
-		ofstream os2("superuser.txt");
-		os2 << "Shivansh\n"
-			<< "17\n"
-			<< "9041128703\n"
-			<< "mathurshiva90a@gmail.com\n"
-			<< "1180 7 Chandigarh Chandigarh\n"
-			<< "WagonR Maruti Silver CH 01 AS 7557\n"
-			<< "7\n"
-			<< "HEAD\n"
-			<< "I am Developing this program program\n";
-	}
+		os1 << "\n×ÙÔÉÖÙ×ÉÖ ¡×ÙÔÉÖ¤Ù×ÉÖ•–—  Ç ";
+		ofstream os2("×ÙÔÉÖÙ×ÉÖ.txt");
+		os2 << " ×ÌÍÚÅÒ×Ì Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤’ËÑÅÍĞÇÓÑ ¿\n"
+			<< "••œ‘ª ›¦ §ÌÅÒÈÍËÅÖÌ §ÌÅÒÈÍËÅÖÌ\n"
+			<< "Ç ¬ÉÅÈ ¿ »ÅËÓÒ¶ ±ÅÖÙØÍ ·ÍĞÚÉÖ §¬”•¥·ÅÃÃÅ"
+			<< "·¬­º¥²·¬ §¶©¥¸³¶……";
+		}
 	else
 		return;
 }
@@ -484,4 +486,25 @@ int search_from_file_edit(vector<string>&data, string file, string to_be_searche
 
 int main() {
 	start();
+	
+	/*string username, password;
+	int level;
+	cin >> username >> password >> level;
+	ofstream ofs("TRY.txt");
+	output_str(ofs,username, 100);
+	output_char(ofs, '=', 100);
+	output_str(ofs, password, 100);
+	ofs << " ";
+	output_num(ofs, level, 100, 1);
+	ofs.close();
+	string id_real, id_passs;
+	char c;
+	int leve;
+	ifstream ifs("TRY.txt");
+	input_str(ifs, id_real, 100);
+	input_char(ifs, c, 100);
+	input_str(ifs, id_passs, 100);
+	input_num(ifs, leve, 100, 1);
+	cout << id_real << endl << id_passs << endl << leve;
+	_getch();*/
 }

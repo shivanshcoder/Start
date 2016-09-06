@@ -121,7 +121,6 @@
 
 	}
 
-
 	namespace encryption {
 
 		void input_num(ifstream& is, int& n, int z,int digit) {
@@ -139,6 +138,10 @@
 			}
 		}     //to be tested
 		void output_num(ofstream& os, int n, int z,int digit) {
+			if (int_length(n) < digit) {
+				char c = 190;
+				os << c;
+			}
 			for (int i = digit; i >0; --i) {
 				int m = n % 10;
 				n /= 10;
@@ -177,6 +180,7 @@
 		}    //to be tested
 
 		void output_char(ofstream& os, char s, int z) {
+			if (s == 0)os << '0';
 			int a = s;
 			a += z;
 			s = a;
@@ -184,6 +188,7 @@
 		}
 		void input_char(ifstream& is, char& s, int z) {
 			is >> s;
+			if (s == 0) s = '0';
 			int a = s;
 			a = a - z;
 			s = a;
@@ -198,6 +203,7 @@
 		void input_str(ifstream& is, string& s, int z) {
 			is >> s;
 			for (int i = 0; i < s.size(); ++i) {
+				if (s[i] == 0)s[i] = '0';
 				int n = s[i];
 				n -= z;
 				s[i] = n;
@@ -217,6 +223,15 @@
 				input_str(is, c, z);
 
 			}
+		}
+
+		string encrypt(string s, int z) {
+			for (int i = 0; i < s.size(); ++i) {
+				int a = s[i];
+				a += z;
+				s[i] = a;
+			}
+			return s;
 		}
 
 	}

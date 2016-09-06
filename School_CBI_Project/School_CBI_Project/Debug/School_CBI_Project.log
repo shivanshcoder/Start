@@ -1,9 +1,2 @@
-﻿  Helpers.cpp
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\helpers.cpp(177): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\helpers.cpp(202): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\helpers.cpp(229): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\helpers.cpp(232): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathur\github\start\school_cbi_project\school_cbi_project\helpers.cpp(257): warning C4018: '<': signed/unsigned mismatch
-Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
-  School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
+﻿  School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)
