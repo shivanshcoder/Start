@@ -106,7 +106,6 @@ void credentials::Login() {
 		input_char(ifs, c, 100);
 		input_str(ifs, id_passs, 100);
 		input_num(ifs, leve, 100,1);
-		_getch();
 		if (!ifs) {
 			eligibility = false;
 			cout << setw(40) << "Wrong Password!";
@@ -256,6 +255,7 @@ void menu::suspects_disp(){
 void profiles::add_profile() {
 	system("cls");
 	Agent a;
+	hide_files(false);
 	cout << setw(44) << "Add Profile\n";
 	if (leve() < 4) {
 		cout << setw(45) << "You are not Authorised!!!\n";
@@ -269,14 +269,15 @@ void profiles::add_profile() {
 		cout << endl << "Username already occupied!!";
 	}
 		add_pass(a.password);
-		hide_files(false);
+		
 		ofstream ofs;
 		ofs.open("confidentials.txt", ios::app);
+		ofs << ' ';
 		output_str(ofs, a.username, 100);
 		output_char(ofs, '=', 100);
 		ofs << ' ';
 		output_str(ofs, a.password, 100);
-		ofs << ' ';;
+		ofs << ' ';
 		output_num(ofs, a.level, 100, 1);
 		ofs.close();
 		cin >> a;
@@ -284,7 +285,6 @@ void profiles::add_profile() {
 		out << a;
 		out.close();
 		hide_files(true);
-		_getch();
 	}
 void profiles::your_profile() {
 	system("cls");
@@ -327,8 +327,10 @@ void profiles::delete_profile() {
 		else
 			return;
 	}
-
+	username = encrypt(username, 100);
 	string file = username + ".txt";
+	cout << username;
+	_getch();
 	remove(file.c_str());
 	vector<string>data;
 
@@ -340,18 +342,22 @@ void profiles::delete_profile() {
 		return;
 	}
 
-	data.erase(data.begin() + i, data.begin() + (i + 4));
 	hide_files(false);
 	ofstream write("confidentials.txt");
 	for (int j = 0; j < data.size()-1; j+=4) {
+		if (j == i && j + 4 < data.size() - 1) j += 4;
+		cout << data[j] << data[j + 1] << data[j + 2] << data[j + 3];
+		_getch();
 		output_str(write, data[j], 100);
 		output_str(write, data[j+1], 100);
 		write << " ";
 		output_str(write, data[j+2], 100);
 		output_str(write, data[j+3], 100);
 		}
+	hide_files(true);
 	if (user() == username)
 		Logout();
+
 	}
 void profiles::edit_profile() {
 	string s;
@@ -468,11 +474,9 @@ void start() {
 void check_if_superuser() {
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", "×ÙÔÉÖÙ×ÉÖ");
-	cout << i;
 	if (i == -1) {
+		hide_files(false);
 		ofstream os1("confidentials.txt", ios::app);
-		cout << "HELLLO";
-		_getch();
 		os1 << "\n×ÙÔÉÖÙ×ÉÖ ¡ ×ÙÔÉÖ¤Ù×ÉÖ•–—  Ç ";
 		ofstream os2("×ÙÔÉÖÙ×ÉÖ.txt");
 		os2 << " ×ÌÍÚÅÒ×Ì Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤’ËÑÅÍĞÇÓÑ ¿\n"
@@ -480,6 +484,7 @@ void check_if_superuser() {
 			<< "Ç ¬ÉÅÈ ¿ »ÅËÓÒ¶ ±ÅÖÙØÍ ·ÍĞÚÉÖ §¬”•¥·ÅÃÃÅ"
 			<< "·¬­º¥²·¬ §¶©¥¸³¶……";
 		}
+	hide_files(true);
 	return;
 }
 void assign(Agent &a, string username, int lev) {
@@ -506,8 +511,6 @@ int search_from_file_edit(vector<string>&data, string file, string to_be_searche
 
 int main() {
 	start();
-	_getch();
-	
 	/*string username, password;
 	int level;
 	cin >> username >> password >> level;
