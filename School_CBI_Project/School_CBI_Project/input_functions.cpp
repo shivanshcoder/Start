@@ -8,6 +8,7 @@
 		int alphanumeric_characters = 0, numerics = 0;
 		io >> c;
 		while (c != ch) {                 //to stop taking inputs once we press enter
+			cinclear(io);
 			s += c;
 			if (isdigit(c)) ++numerics;   //to check number of numericals
 			if (c == '!' || c == '@' || c == '$' || c == '&' || c == '*' || c == '%' || c == '#') ++alphanumeric_characters;  //to check chec number of alphanumerical words
@@ -28,7 +29,7 @@
 	}
 
 	void input_int(istream& io, int& num) {
-		io >> num;
+		num = _getch();
 		if (!io) {
 			io.clear();
 			io.ignore(1000, '\n');
@@ -106,6 +107,21 @@
 
 	}
 
+	void cinclear(istream& io) {
+		if (!io) {
+			if (io.bad()) {
+				system("cls");
+				wait("Stream Got corrupted!!");
+				exit(0);
+			}
+			else if (io.fail()) {
+				io.clear();
+				io.ignore(1000, '\n');
+			}
+		}
+		else return;
+	}
+
 	void hide_files(bool hide) {
 		fstream fs;
 		string file_name = "external_data.bat";
@@ -119,6 +135,11 @@
 		fs.close();
 		system("start external_data.bat");
 
+	}
+
+	void wait(string s) {
+		cout << s;
+		_getch();
 	}
 
 	namespace encryption {
@@ -178,20 +199,14 @@
 			}
 			os << ' ';
 		}    //to be tested
-
+		
 		void output_char(ofstream& os, char s, int z) {
-			if (s == 0)os << '0';
-			int a = s;
-			a += z;
-			s = a;
+			encrypt(s,z);
 			os << s;
 		}
 		void input_char(ifstream& is, char& s, int z) {
 			is >> s;
-			if (s == 0) s = '0';
-			int a = s;
-			a = a - z;
-			s = a;
+			decrypt(s, z);
 		}
 
 		void output_str(ofstream& os, string s, int z) {
@@ -203,10 +218,7 @@
 		void input_str(ifstream& is, string& s, int z) {
 			is >> s;
 			for (int i = 0; i < s.size(); ++i) {
-				if (s[i] == 0)s[i] = '0';
-				int n = s[i];
-				n -= z;
-				s[i] = n;
+				decrypt(s[i],z);
 			}
 		}
 
@@ -227,11 +239,24 @@
 
 		string encrypt(string s, int z) {
 			for (int i = 0; i < s.size(); ++i) {
-				int a = s[i];
-				a += z;
-				s[i] = a;
+				encrypt(s[i], z);
 			}
 			return s;
+		}
+		void decrypt(string& s, int z) {
+			for (int i = 0; i < s.size(); ++i) decrypt(s[i], z);
+		}
+		void decrypt(char& c, int z) {
+			if (c == 0)c = '0';
+			int a = c;
+			a -= z;
+			c = a;
+		}
+		void encrypt(char& c, int z) {
+			if (c == 0)c = '0';
+			int a = c;
+			a += z;
+			c = a;
 		}
 
 	}

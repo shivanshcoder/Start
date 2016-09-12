@@ -16,6 +16,7 @@ namespace Helpers {
 	}
 
 	istream& operator >> (istream& is, email& e) {
+		e.cls();
 		cout << "Enter your Email-ID:";
 		char c;
 		is >> c;
@@ -41,6 +42,7 @@ namespace Helpers {
 				return is;
 			}
 		}
+		e.id += e.domain;
 		e.id += '.';
 		string s;
 		is >> s;
@@ -50,8 +52,8 @@ namespace Helpers {
 			is >> e;
 			return is;
 		}
-		e.domain += s;
-		e.id += e.domain;
+		e.id += s;
+		_getch();
 		return is;
 	}
 	ostream& operator << (ostream& os, email& e) {
@@ -70,14 +72,14 @@ namespace Helpers {
 	istream& operator >> (istream& is, Address& a) {
 		cout << "\nEnter your House details\n";
 		input_string(is, "House num:", a.house_num);
-		input_string(is, "Sector:",a.sector);
+		input_string(is, "Sector/Colony:",a.sector);
 		input_string(is, "City:", a.city);
 		input_string(is, "State:", a.state);
 		return is;
 	}
 	ostream& operator << (ostream& os, Address& a) {
 		os << "\nHouse num:" << a.house_num
-			<< "\nSector:" << a.sector
+			<< "\nSector/Colony:" << a.sector
 			<< "\nCity:" << a.city
 			<< "\nState:" << a.state;
 		return os;
@@ -174,7 +176,7 @@ namespace Helpers {
 			<< "\nAge:" << p.age
 			<< "\nMobile Number:" << p.mobile_num
 			<< p.id;
-		for (int i = 0; i < p.home.size(); ++i)os << p.home[i];
+		for (int i = 0; i < p.home.size(); ++i)os << endl << p.home[i];
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, person& p){
@@ -209,9 +211,9 @@ namespace Helpers {
 		is >> a.p;
 		input_int(is,"Enter Level:", "Level", a.level);
 		input_string(is, "Enter the Post:", a.post);
-		car_num c;
-		is >> c;
-		a.car.push_back(c);
+	//	car_num c;
+	//	is >> c;
+	//	a.car.push_back(c);
 		cout << "\nDescription:\n";
 		is >> descrip;
 		a.description.clear();
@@ -224,15 +226,16 @@ namespace Helpers {
 	}
 	ostream& operator << (ostream& os, Agent& a) {
 		os << a.p;
-		os << "\nPost:" << a.post
-			<< "\nLevel:" << a.level;
 		for (int i = 0; i<a.car.size(); ++i)
 				os << endl << a.car[i];
-		os << "\nDescription:\n";
+		os << "\n\nPost:" << a.post
+			<< "\nLevel:" << a.level;
+		os << "\n\nDescription:\n";
 		for (int i = 0; i < a.description.size(); ++i) os << a.description[i] << " ";
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, Agent& a) {
+		if (a.filled == true) return is;
 		string descrip;
 		is >> a.p;
 		int j;
@@ -245,6 +248,7 @@ namespace Helpers {
 			a.car.push_back(c);
 		}
 		input_line(is, a.description, 100);
+		a.filled = true;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, Agent& a) { 
@@ -292,4 +296,5 @@ namespace Helpers {
 
 		//system("start LOG.txt");
 	}
+
 }

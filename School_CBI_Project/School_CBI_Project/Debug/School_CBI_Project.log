@@ -1,2 +1,16 @@
-﻿  School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
+﻿  School_Project.cpp
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(14): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(43): note: see declaration of 'profiles'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(14): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(56): note: see declaration of 'criminals'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(68): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(14): note: see declaration of 'credentials'
+  c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(64): note: see declaration of 'suspects'
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(157): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(346): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathur\github\start\school_cbi_project\school_cbi_project\school_project.cpp(502): warning C4018: '<': signed/unsigned mismatch
+Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+  School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\Mathur\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)

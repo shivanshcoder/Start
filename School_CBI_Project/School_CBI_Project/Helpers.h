@@ -39,6 +39,7 @@ namespace Helpers {
 		string post, username, password;
 		int level;
 		vector<string>description;
+		bool filled;
 	};
 	struct Criminal {
 		vector<car_num>cars;
