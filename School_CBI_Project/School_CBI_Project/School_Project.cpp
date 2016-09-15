@@ -299,7 +299,6 @@ void profiles::your_profile() {
 void profiles::delete_profile() {
 	system("cls");
 	string ans,username;
-	cout << username;
 	if (leve() > 6) {
 		input_string(cin,"Do you want to delete your ID or others(your/other)?", ans);
 		if (ans == "your"||ans == "mine") {
@@ -325,30 +324,31 @@ void profiles::delete_profile() {
 		else
 			return;
 	}
+	hide_files(false);
 	string file = encrypt(username,100) + ".txt";
 	remove(file.c_str());
 	vector<string>data;
-
-	int i = search_from_file_edit(data, "confidentials.txt", decrypt(username,100));
+	int i = search_from_file_edit(data, "confidentials.txt", username);
 
 	if (i == -1) {
 		cout << "\nRecord of " << username << " not available!!";
 		_getch();
 		return;
 	}
-
-	hide_files(false);
 	ofstream write("confidentials.txt");
 	for (int j = 0; j < data.size()-1; j+=4) {
 		if (j == i && j + 4 < data.size() - 1) j += 4;
+		cout << endl << data[j] << " " << data[j + 1] << " " << data[j + 2] << " " << data[j + 3] << endl;
 		output_str(write, data[j], 100);
 		output_str(write, data[j+1], 100);
 		write << " ";
 		output_str(write, data[j+2], 100);
 		output_str(write, data[j+3], 100);
 		}
+	write.close();
+	_getch();
 	hide_files(true);
-	if (user() == decrypt(username, 100))
+	if (user() == username)
 		Logout();
 
 	}
