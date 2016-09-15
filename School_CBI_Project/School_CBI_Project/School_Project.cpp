@@ -111,7 +111,7 @@ void credentials::Login() {
 			wait_sp("Wrong Password!", 40,true);
 			return;
 		}
-
+		cout << id_real << " " << id_passs;
 		if (A.username == id_real && A.password == id_passs) {
 			eligibility = true;
 			A.level = leve;
@@ -299,7 +299,7 @@ void profiles::your_profile() {
 void profiles::delete_profile() {
 	system("cls");
 	string ans,username;
-
+	cout << username;
 	if (leve() > 6) {
 		input_string(cin,"Do you want to delete your ID or others(your/other)?", ans);
 		if (ans == "your"||ans == "mine") {
@@ -325,14 +325,11 @@ void profiles::delete_profile() {
 		else
 			return;
 	}
-	username = encrypt(username, 100);
-	string file = username + ".txt";
-	cout << username;
-	_getch();
+	string file = encrypt(username,100) + ".txt";
 	remove(file.c_str());
 	vector<string>data;
 
-	int i = search_from_file_edit(data, "confidentials.txt", username);
+	int i = search_from_file_edit(data, "confidentials.txt", decrypt(username,100));
 
 	if (i == -1) {
 		cout << "\nRecord of " << username << " not available!!";
@@ -344,8 +341,6 @@ void profiles::delete_profile() {
 	ofstream write("confidentials.txt");
 	for (int j = 0; j < data.size()-1; j+=4) {
 		if (j == i && j + 4 < data.size() - 1) j += 4;
-		cout << data[j] << data[j + 1] << data[j + 2] << data[j + 3];
-		_getch();
 		output_str(write, data[j], 100);
 		output_str(write, data[j+1], 100);
 		write << " ";
@@ -353,7 +348,7 @@ void profiles::delete_profile() {
 		output_str(write, data[j+3], 100);
 		}
 	hide_files(true);
-	if (user() == username)
+	if (user() == decrypt(username, 100))
 		Logout();
 
 	}
@@ -418,9 +413,9 @@ void profiles::add_assets() {
 void profiles::add_pass(string &p) {
 	string p1, p2;
 	cout << "\nEnter password:";
-	inputs(cin,true,p1, true, 3, 2, "Password");///
+	inputs('*',p1, true, 3, 2, "Password");
 	cout << "\nRe-Enter password:";
-	inputs(cin,true,p2, true, 3, 2, "Password");///
+	inputs('*',p2, true, 3, 2, "Password");
 	if (p1 != p2) {
 		wait("\npasswords dont match!!");
 		add_pass(p);
@@ -430,6 +425,7 @@ void profiles::add_pass(string &p) {
 		add_pass(p);
 	}
 	p = p2;
+	cout << endl;
 }
 void profiles::other_profile(){
 	system("cls");

@@ -11,7 +11,7 @@
 			cinclear(io);
 			s += c;
 			if (isdigit(c)) ++numerics;   //to check number of numericals
-			if (c == '!' || c == '@' || c == '$' || c == '&' || c == '*' || c == '%' || c == '#') ++alphanumeric_characters;  //to check chec number of alphanumerical words
+			alphanumeric_characters += splchar(c);  //to check chec number of alphanumerical words
 			io.get(c);
 		}
 		if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
@@ -22,17 +22,20 @@
 			inputs(io, s, true,num_limit,alpc_limit,statement);
 		}  //to  check strength of password usually
 	}
-	void inputs(istream& io, bool charac, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
+	void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, string statement) {
 		int alphanumeric_characters = 0, numerics = 0;
 		char c[20];
 		s.clear();
 		c[0] = _getch();
+		while (c[0] == 13)c[0] = _getch();
+		if (isdigit(c[0])) ++numerics;   //to check number of numericals
+		alphanumeric_characters += splchar(c[0]);  //to check chec number of alphanumerical words
 		cinclear(cin);
 		for (int i = 1; c[i] != 13; ++i) {
-			if (isdigit(c[i])) ++numerics;   //to check number of numericals
-			if (c[i] == '!' || c[i] == '@' || c[i] == '$' || c[i] == '&' || c[i] == '*' || c[i] == '%' || c[i] == '#') ++alphanumeric_characters;  //to check chec number of alphanumerical words
-			cout << '*';
+			cout << charac;
 			c[i] = _getch();
+			if (isdigit(c[i])) ++numerics;   //to check number of numericals
+			alphanumeric_characters += splchar(c[i]);  //to check chec number of alphanumerical words
 			cinclear(cin);
 			if (c[i] == 13) {
 				c[i] = '\0';
@@ -57,7 +60,7 @@
 			cout << '\n' << setw(35) << statement << " not strong enough!!\n"
 				<< setw(30) << "Atleast " << alpc_limit
 				<< " special characters and " << num_limit << " numericals\n";
-			inputs(io, true,s, true,num_limit,alpc_limit,statement);
+			inputs(true,s, true,num_limit,alpc_limit,statement);
 		}  //to  check strength of password usually
 		for (int i = 0; c[i] != '\0'; ++i) {
 			s += " ";
@@ -68,6 +71,7 @@
 		char c[20];
 		s.clear();
 		c[0] = _getch();
+		while (c[0] == 13)c[0] = _getch();
 		cinclear(cin);
 		for (int i = 1; c[i] != 13; ++i) {
 			cout << '*';
@@ -221,6 +225,12 @@
 		_getch();
 	}
 
+	int splchar(char c) {
+		if (c == '!' || c == '@' || c == '$' || c == '&' || c == '*' || c == '%' || c == '#')
+			return 1;
+		return 0;
+	}
+
 	namespace encryption {
 
 		void input_num(ifstream& is, int& n, int z,int digit) {
@@ -322,8 +332,9 @@
 			}
 			return s;
 		}
-		void decrypt(string& s, int z) {
+		string decrypt(string s, int z) {
 			for (int i = 0; i < s.size(); ++i) decrypt(s[i], z);
+			return s;
 		}
 		void decrypt(char& c, int z) {
 			if (c == 0)c = '0';
