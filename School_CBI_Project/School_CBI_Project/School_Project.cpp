@@ -1,6 +1,4 @@
 #include"Helpers.h"
-#include<fstream>
-#include<conio.h>
 
 using namespace std;
 using namespace Helpers;
@@ -89,18 +87,20 @@ void credentials::Login() {
 	int leve;
 	char c;
 
-	cout << "\n\n\n\n\n\n\n"
-		<< setw(35) << "Login ID:";
+	cout << "\n\n\n\n\n\n\n";
+	wait_sp("Login ID:", 35,false);
 	cin >> A.username;
 	if (A.username == "exit") exit(0);
 	cinclear(cin);
-	cout << endl << setw(35) << "Password:";
-	inputs(cin,A.password, false, 0, 0);
-	cinclear(cin);
+	wait_sp("Password:", 35,false);
+	input_enter(A.password);
 	if (A.password == "exit") exit(0);
 
 	ifstream ifs("confidentials.txt");
-	if (!ifs) cout << "Error!!!";
+	if (!ifs) {
+		wait("Error!!!");
+		exit(0);
+	}
 	while (true) {
 		input_str(ifs, id_real, 100);
 		input_char(ifs, c, 100);
@@ -108,8 +108,7 @@ void credentials::Login() {
 		input_num(ifs, leve, 100,1);
 		if (!ifs) {
 			eligibility = false;
-			cout << setw(40) << "Wrong Password!";
-			_getch();
+			wait_sp("Wrong Password!", 40,true);
 			return;
 		}
 
@@ -126,11 +125,10 @@ void credentials::Login() {
 void credentials::Logout() {
 	system("cls");
 	eligibility = false;
-	cout << '\n' << setw(35) << "You have been Loged out Successfully";
-	fstream fs;
-	fs.open("help.bat");
-	fs << "start ";
-	_getch();
+	wait_sp("You have been Loged out Successfully", 35,true);
+//	fstream fs;
+//	fs.open("help.bat");
+//	fs << "start ";
 	start();
 	return;
 }
@@ -420,9 +418,9 @@ void profiles::add_assets() {
 void profiles::add_pass(string &p) {
 	string p1, p2;
 	cout << "\nEnter password:";
-	inputs(cin,p1, true, 3, 2, "Password");
+	inputs(cin,true,p1, true, 3, 2, "Password");///
 	cout << "\nRe-Enter password:";
-	inputs(cin,p2, true, 3, 2, "Password");
+	inputs(cin,true,p2, true, 3, 2, "Password");///
 	if (p1 != p2) {
 		wait("\npasswords dont match!!");
 		add_pass(p);
@@ -456,7 +454,6 @@ void criminals::details_criminals() {
 	cout << setw(44) << "Criminals Search";
 	cout << "Name of the Criminal:";
 	cin >> name;
-
 }
 
 void start() {

@@ -6,6 +6,7 @@
 #include<fstream>
 #include<istream>
 #include<conio.h>
+
 using namespace std;
 
 	int int_length(int num);
@@ -23,7 +24,10 @@ using namespace std;
 
 	void input_string(istream& io,string Question, string &ans);
 	void inputs(istream& io,string &s, bool alpha = false, int num_limit = 1, int alpc_limit = 1, string statement = "", char ch = '\n');
+	void inputs(istream& io, bool charac,string &s, bool alpha = false, int num_limit = 1, int alpc_limit = 1, string statement = "", char ch = '\n');
+	void input_enter(string& s);
 	void wait(string s);
+	void wait_sp(string s, int z,bool k);
 
 	namespace encryption {
 

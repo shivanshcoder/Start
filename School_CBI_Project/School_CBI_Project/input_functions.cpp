@@ -19,8 +19,82 @@
 			cout << '\n' << setw(35) << statement << " not strong enough!!\n"
 				<< setw(30) << "Atleast " << alpc_limit
 				<< " special characters and " << num_limit << " numericals\n";
-			inputs(io, s, true);
+			inputs(io, s, true,num_limit,alpc_limit,statement);
 		}  //to  check strength of password usually
+	}
+	void inputs(istream& io, bool charac, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
+		int alphanumeric_characters = 0, numerics = 0;
+		char c[20];
+		s.clear();
+		c[0] = _getch();
+		cinclear(cin);
+		for (int i = 1; c[i] != 13; ++i) {
+			if (isdigit(c[i])) ++numerics;   //to check number of numericals
+			if (c[i] == '!' || c[i] == '@' || c[i] == '$' || c[i] == '&' || c[i] == '*' || c[i] == '%' || c[i] == '#') ++alphanumeric_characters;  //to check chec number of alphanumerical words
+			cout << '*';
+			c[i] = _getch();
+			cinclear(cin);
+			if (c[i] == 13) {
+				c[i] = '\0';
+				break;
+			}
+			while (c[i] == 8 && i > -1) {
+				cout << '\b';
+				cout << " ";
+				cout << '\b';
+				c[i] = '\0';
+				--i;
+				c[i] = _getch();
+				while (i == 0 && c[i] == 8) {
+					c[i] = _getch();
+				}
+				cinclear(cin);
+				if (c[i] != 8) break;
+			}
+		}
+		if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
+			s.clear();
+			cout << '\n' << setw(35) << statement << " not strong enough!!\n"
+				<< setw(30) << "Atleast " << alpc_limit
+				<< " special characters and " << num_limit << " numericals\n";
+			inputs(io, true,s, true,num_limit,alpc_limit,statement);
+		}  //to  check strength of password usually
+		for (int i = 0; c[i] != '\0'; ++i) {
+			s += " ";
+			s[i] = c[i];
+		}
+	}
+	void input_enter(string& s) {
+		char c[20];
+		s.clear();
+		c[0] = _getch();
+		cinclear(cin);
+		for (int i = 1; c[i] != 13; ++i) {
+			cout << '*';
+			c[i] = _getch();
+			cinclear(cin);
+			if (c[i] == 13) {
+				c[i] = '\0';
+				break;
+			}
+			while (c[i] == 8 && i > -1) {
+				cout << '\b';
+				cout << " ";
+				cout << '\b';
+				c[i] = '\0';
+				--i;
+				c[i] = _getch();
+				while (i == 0 && c[i] == 8) {
+					c[i] = _getch();
+				}
+				cinclear(cin);
+				if (c[i] != 8) break;
+			}
+		}
+		for (int i = 0; c[i] != '\0'; ++i) {
+			s += " ";
+			s[i] = c[i];
+		}
 	}
 
 	void input_string(istream& io, string Question, string &ans) {
@@ -138,7 +212,12 @@
 	}
 
 	void wait(string s) {
-		cout << s;
+		cout << endl << s;
+		_getch();
+	}
+	void wait_sp(string s,int z,bool k){
+		cout << endl << setw(z) << s;
+		if(k)
 		_getch();
 	}
 
