@@ -11,8 +11,10 @@ int search_from_file_edit(vector<string>&data, string file, string to_be_searche
 
 class credentials {
 public:
+	bool hidden;
 	credentials(bool to_desplayornot) {
 		eligibility = false;
+		hidden = true;
 		int i = 0;
 		Login();
 		while (eligibility == false && i<5) {
@@ -21,6 +23,7 @@ public:
 		}
 	}
 	credentials(string username,int lev){
+		hidden = true;
 		assign(A,username, lev);
 	}
 protected:
@@ -40,7 +43,7 @@ protected:
 };
 class profiles : private credentials {
 public:
-	profiles(string username, int lev) :credentials(username, lev) {}
+	profiles(string username, int lev) :credentials(username, lev) { hidden = true; }
 protected:
 	void add_profile();
 	void add_assets();
@@ -53,7 +56,7 @@ protected:
 };
 class criminals : private credentials {
 public:
-	criminals(string username, int lev) :credentials(username, lev) {}
+	criminals(string username, int lev) :credentials(username, lev) { hidden = true; }
 protected:
 	void add_criminals();
 	void details_criminals();
@@ -61,7 +64,7 @@ protected:
 };
 class suspects :private credentials {
 public:
-	suspects(string username, int lev):credentials(username,lev){}
+	suspects(string username, int lev) :credentials(username, lev) { hidden = true; }
 };
 class menu : private credentials, profiles, criminals, suspects{
 public:
@@ -71,6 +74,8 @@ public:
 			main_disp();
 		}
 }
+
+	bool file_hide() { return credentials::hidden; }
 
 	void main_disp();
 	void profile_disp();
@@ -88,12 +93,12 @@ void credentials::Login() {
 	char c;
 
 	cout << "\n\n\n\n\n\n\n";
-	wait_sp("Login ID:", 35,false);
-	cin >> A.username;
+	wait_sp("Login ID:", 35, false); 
+	string_enter(A.username);
 	if (A.username == "exit") exit(0);
-	cinclear(cin);
+	cout << "\n";
 	wait_sp("Password:", 35,false);
-	input_enter(A.password);
+	string_enter(A.password,'*');
 	if (A.password == "exit") exit(0);
 
 	ifstream ifs("confidentials.txt");
@@ -111,7 +116,6 @@ void credentials::Login() {
 			wait_sp("Wrong Password!", 40,true);
 			return;
 		}
-		cout << id_real << " " << id_passs;
 		if (A.username == id_real && A.password == id_passs) {
 			eligibility = true;
 			A.level = leve;
@@ -126,9 +130,6 @@ void credentials::Logout() {
 	system("cls");
 	eligibility = false;
 	wait_sp("You have been Loged out Successfully", 35,true);
-//	fstream fs;
-//	fs.open("help.bat");
-//	fs << "start ";
 	start();
 	return;
 }
@@ -254,6 +255,7 @@ void profiles::add_profile() {
 	system("cls");
 	Agent a;
 	hide_files(false);
+	credentials::hidden = false;
 	cout << setw(44) << "Add Profile\n";
 	if (leve() < 4) {
 		cout << setw(45) << "You are not Authorised!!!\n";
@@ -263,7 +265,7 @@ void profiles::add_profile() {
 	while (true) {
 		vector<string>scrap;
 		cout << "\n\nCreate a Username:";
-		inputs(cin,a.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", a.username) == -1) break;
+		inputs('\0',a.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", a.username) == -1) break;
 		cout << endl << "Username already occupied!!";
 	}
 		add_pass(a.password);
@@ -299,6 +301,8 @@ void profiles::your_profile() {
 void profiles::delete_profile() {
 	system("cls");
 	string ans,username;
+	hide_files(false);
+	hidden = false;
 	if (leve() > 6) {
 		input_string(cin,"Do you want to delete your ID or others(your/other)?", ans);
 		if (ans == "your"||ans == "mine") {
@@ -324,7 +328,6 @@ void profiles::delete_profile() {
 		else
 			return;
 	}
-	hide_files(false);
 	string file = encrypt(username,100) + ".txt";
 	remove(file.c_str());
 	vector<string>data;
@@ -348,6 +351,7 @@ void profiles::delete_profile() {
 	write.close();
 	_getch();
 	hide_files(true);
+	hidden = true;
 	if (user() == username)
 		Logout();
 
@@ -364,7 +368,12 @@ void profiles::edit_profile() {
 			vector<string>temp;
 			input_string(cin,"Enter Old Password:", s);
 			if( search_from_file_edit(temp, s, "confidentials.txt") == -1) wait("Passwords don't match!!");
-			add_pass(A.password);
+			if(temp[i-2]!=user())wait("Passwords don't match!!");
+			add_pass(s);
+			temp[i] = s;
+			ofstream ofs;
+			ofs.open("confidentials.txt", ios::app);
+			ofs.close();
 			break;
 		}
 		break;
@@ -412,10 +421,14 @@ void profiles::add_assets() {
 }
 void profiles::add_pass(string &p) {
 	string p1, p2;
-	cout << "\nEnter password:";
-	inputs('*',p1, true, 3, 2, "Password");
-	cout << "\nRe-Enter password:";
-	inputs('*',p2, true, 3, 2, "Password");
+	while (p1.size() == 0) {
+		cout << "\nEnter password:";
+		inputs('*', p1, true, 3, 2, "Password");
+	}
+	while (p2.size() == 0) {
+		cout << "\nRe-Enter password:";
+		inputs('*', p2, true, 3, 2, "Password");
+	}
 	if (p1 != p2) {
 		wait("\npasswords dont match!!");
 		add_pass(p);
@@ -458,6 +471,7 @@ void start() {
 	//hide_files(false);
 	menu m(true);
 	check_if_superuser();
+	if(!hide_files)
 	hide_files(true);
 	string s = "external_data.bat";
 	system("cls");
@@ -490,14 +504,16 @@ void assign(Agent &a, string username, int lev) {
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched) {
 	ifstream fs(file);
 	string s;
-	decrypt(to_be_searched, 100);
+	to_be_searched = decrypt(to_be_searched, 100);
 	while (fs) {
 		input_str(fs, s, 100);
 		data.push_back(s);
 	}
 	int i = 0;
 	fs.close();
-	while (i < data.size() && data[i] != to_be_searched) ++i;
+	while (i < data.size() && data[i] != to_be_searched) {
+		++i;
+	}
 	if (i == data.size()) return -1;
 	return i;
 }

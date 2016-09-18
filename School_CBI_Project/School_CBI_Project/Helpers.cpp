@@ -20,22 +20,27 @@ namespace Helpers {
 		cout << "Enter your Email-ID:";
 		char c;
 		is >> c;
+		cinclear(is);
 		while (c != '@') {
 			e.username += c;
 			is.get(c);
-		
+			cinclear(is);
 			if (!e.check(c, '\n', "@")) {
 				e.cls();
 				is >> e;
+				cinclear(is);
 				return is;
 			}
 		}
 		e.id += e.username;
 		e.id += '@';
 		is >> c;
+		cinclear(is);
 		while (c != '.') {
 			e.domain += c;
-			is.get(c);
+			//is.get(c);
+			is >> c;
+			cinclear(is);
 			if (!e.check(c, '\n', ".")) {
 				e.cls();
 				is >> e;

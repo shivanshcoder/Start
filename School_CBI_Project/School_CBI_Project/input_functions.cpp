@@ -2,17 +2,20 @@
 #include"input_functions.h"
 
 
+
 	void inputs(istream& io, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
 		char c;
 		s.clear();         //if the loop login starts again the input fuction does not add password to the old password
 		int alphanumeric_characters = 0, numerics = 0;
-		io >> c;
+		//io>>c;
+		inchar(io, c);
 		while (c != ch) {                 //to stop taking inputs once we press enter
 			cinclear(io);
 			s += c;
 			if (isdigit(c)) ++numerics;   //to check number of numericals
 			alphanumeric_characters += splchar(c);  //to check chec number of alphanumerical words
-			io.get(c);
+			//io.get(c);
+			inchar(io, c);
 		}
 		if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
 			s.clear();
@@ -26,17 +29,18 @@
 		int alphanumeric_characters = 0, numerics = 0;
 		char c[20];
 		s.clear();
-		c[0] = _getch();
-		while (c[0] == 13)c[0] = _getch();
+		inchar_enter(c[0]);
 		if (isdigit(c[0])) ++numerics;   //to check number of numericals
 		alphanumeric_characters += splchar(c[0]);  //to check chec number of alphanumerical words
-		cinclear(cin);
 		for (int i = 1; c[i] != 13; ++i) {
-			cout << charac;
-			c[i] = _getch();
+			if (charac) {
+				cout << charac;
+			}
+			else
+				cout << c[i-1];
+			inchar_enter(c[i], { 13,8 });
 			if (isdigit(c[i])) ++numerics;   //to check number of numericals
 			alphanumeric_characters += splchar(c[i]);  //to check chec number of alphanumerical words
-			cinclear(cin);
 			if (c[i] == 13) {
 				c[i] = '\0';
 				break;
@@ -48,11 +52,12 @@
 				c[i] = '\0';
 				--i;
 				c[i] = _getch();
+				inchar_enter(c[i], { 8,13 });
 				while (i == 0 && c[i] == 8) {
 					c[i] = _getch();
 				}
-				cinclear(cin);
-				if (c[i] != 8) break;
+				//cinclear(cin);
+				//if (c[i] != 8) break;
 			}
 		}
 		if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
@@ -60,41 +65,8 @@
 			cout << '\n' << setw(35) << statement << " not strong enough!!\n"
 				<< setw(30) << "Atleast " << alpc_limit
 				<< " special characters and " << num_limit << " numericals\n";
-			inputs(true,s, true,num_limit,alpc_limit,statement);
+			return;
 		}  //to  check strength of password usually
-		for (int i = 0; c[i] != '\0'; ++i) {
-			s += " ";
-			s[i] = c[i];
-		}
-	}
-	void input_enter(string& s) {
-		char c[20];
-		s.clear();
-		c[0] = _getch();
-		while (c[0] == 13)c[0] = _getch();
-		cinclear(cin);
-		for (int i = 1; c[i] != 13; ++i) {
-			cout << '*';
-			c[i] = _getch();
-			cinclear(cin);
-			if (c[i] == 13) {
-				c[i] = '\0';
-				break;
-			}
-			while (c[i] == 8 && i > -1) {
-				cout << '\b';
-				cout << " ";
-				cout << '\b';
-				c[i] = '\0';
-				--i;
-				c[i] = _getch();
-				while (i == 0 && c[i] == 8) {
-					c[i] = _getch();
-				}
-				cinclear(cin);
-				if (c[i] != 8) break;
-			}
-		}
 		for (int i = 0; c[i] != '\0'; ++i) {
 			s += " ";
 			s[i] = c[i];
@@ -185,7 +157,7 @@
 
 	}
 
-	void cinclear(istream& io) {
+	bool cinclear(istream& io) {
 		if (!io) {
 			if (io.bad()) {
 				system("cls");
@@ -195,9 +167,10 @@
 			else if (io.fail()) {
 				io.clear();
 				io.ignore(1000, '\n');
+				return false;
 			}
 		}
-		else return;
+		else return true;
 	}
 
 	void hide_files(bool hide) {
@@ -226,9 +199,82 @@
 	}
 
 	int splchar(char c) {
-		if (c == '!' || c == '@' || c == '$' || c == '&' || c == '*' || c == '%' || c == '#')
+		switch (c) {
+		case '~': case '`': case '!': case '@': case '#': case '$': case '%': case '^': case '&': case '*': case '(': case ')':
+		case '-': case '_': case '+': case '=': case '\'': case '|': case ']': case '[': case '{': case '}': case ';': case ':':
+		//case ''': 
+		case '"': case '/': case '<': case '>':  case '?':  case '.': case',':
 			return 1;
-		return 0;
+		default:
+			return 0;
+		}
+	}
+
+	void inchar(istream& in,char& c) {
+		in >> c;
+		cinclear(in);
+	}
+	void getchar(istream& in, char& c) {
+		in.get(c);
+		cinclear(cin);
+	}
+		
+	void inchar_enter(char& c) {
+		c = _getch();
+		while (c < 0 || c>255) {
+			c = _getch();
+			c = _getch();
+		}
+		if (isalpha(c)|| isdigit(c) || splchar(c))return;
+		inchar_enter(c);
+	}
+	void inchar_enter(char& c, vector<int>splchars) {
+		c = _getch();
+		while (c < 0 || c>255) {
+			c = _getch();
+			c = _getch();
+		}
+		if (isalpha(c) || isdigit(c) || splchar(c))return;
+		for (int i = 0; i < splchars.size(); ++i) {
+			if (splchars[i] == c)return;
+		}
+		inchar_enter(c);
+	}
+	void string_enter(string& s, char charac) {
+		char c[20];
+		s.clear();
+		inchar_enter(c[0]);
+		for (int i = 1; c[i] != 13; ++i) {
+			if (charac)
+				cout << charac;
+			else
+				cout << c[i - 1];
+			inchar_enter(c[i], { 13,8 });
+
+			while (i == 19 && c[i] != 13) {
+				c[i] = _getch();
+			}
+			while (c[i] == 8 && i > -1) {
+				cout << '\b';
+				cout << " ";
+				cout << '\b';
+				c[i] = '\0';
+				--i;
+				inchar_enter(c[i], { 8,13 });
+				while (i == 0 && c[i] == 8) {
+					inchar_enter(c[i], { 8,13 });
+				}
+				if (c[i] != 8) break;
+			}
+			if (c[i] == 13) {
+				c[i] = '\0';
+				break;
+			}
+		}
+		for (int i = 0; c[i] != '\0'; ++i) {
+			s += " ";
+			s[i] = c[i];
+		}
 	}
 
 	namespace encryption {
@@ -322,7 +368,6 @@
 			while (is) {
 				s.push_back(c);
 				input_str(is, c, z);
-
 			}
 		}
 
@@ -348,5 +393,4 @@
 			a += z;
 			c = a;
 		}
-
 	}
