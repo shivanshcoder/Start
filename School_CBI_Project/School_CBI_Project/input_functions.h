@@ -1,11 +1,8 @@
 #pragma once
+#include"vector.h"
 #include<iostream>
-#include<vector>
-#include<string>
 #include<iomanip>
 #include<fstream>
-#include<istream>
-#include<conio.h>
 
 using namespace std;
 

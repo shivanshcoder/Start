@@ -96,7 +96,9 @@ void credentials::Login() {
 	wait_sp("Login ID:", 35, false); 
 	string_enter(A.username);
 	if (A.username == "exit") exit(0);
+
 	cout << "\n";
+
 	wait_sp("Password:", 35,false);
 	string_enter(A.password,'*');
 	if (A.password == "exit") exit(0);
@@ -106,6 +108,7 @@ void credentials::Login() {
 		wait("Error!!!");
 		exit(0);
 	}
+
 	while (true) {
 		input_str(ifs, id_real, 100);
 		input_char(ifs, c, 100);
@@ -164,7 +167,7 @@ int credentials::disp(vector<string>list, string heading) {
 
 void menu::main_disp() {
 	while (true) {
-		choice = credentials::disp({ "Manage Profiles","Criminals","Suspects","Log Out","Exit" }, "CBI");
+		choice = credentials::disp(vector<string>{ "Manage Profiles","Criminals","Suspects","Log Out","Exit" }, "CBI");
 		switch (choice) {
 		case '1':
 			profile_disp();
@@ -191,7 +194,7 @@ void menu::main_disp() {
 }
 void menu::profile_disp() {
 	while (true) {
-		choice = credentials::disp({ "Your profile","Delete Profile","Add Profile","Edit Profile", "Back to Main Menu" }, "PROFILES");
+		choice = credentials::disp(vector<string>{ "Your profile","Delete Profile","Add Profile","Edit Profile", "Back to Main Menu" }, "PROFILES");
 		switch (choice) {
 		case '1':
 			your_profile();
@@ -216,7 +219,7 @@ void menu::profile_disp() {
 }
 void menu::criminals_disp(){
 	while (true) {
-		choice = credentials::disp({ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
+		choice = credentials::disp(vector<string>{ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
 		switch (choice) {
 		case '1':
 			break;
@@ -234,7 +237,7 @@ void menu::criminals_disp(){
 }
 void menu::suspects_disp(){
 	while (true) {
-		choice = credentials::disp({ "" }, "");
+		choice = credentials::disp(vector<string>{ "" }, "");
 		switch (choice) {
 		case '1':
 			break;
@@ -249,7 +252,7 @@ void menu::suspects_disp(){
 			cout << "Invalid Choice!!";
 		}
 	}
-}      
+} 
 
 void profiles::add_profile() {
 	system("cls");
@@ -360,7 +363,7 @@ void profiles::edit_profile() {
 	string s;
 	ifstream input(credentials::A.username + ".txt");
 	input >> A;
-	int choice = credentials::disp({"Change password","Edit Description","Add Assets"}, "Edit");
+	int choice = credentials::disp(vector<string>{"Change password","Edit Description","Add Assets"}, "Edit");
 	switch (choice){
 	case 1: {
 		string s;
@@ -394,7 +397,7 @@ void profiles::edit_profile() {
 	output << A;
 }
 void profiles::add_assets() {
-	char choice = credentials::disp({ "Add House","Add Car" }, "Add Assets");
+	char choice = credentials::disp(vector<string>{ "Add House","Add Car" }, "Add Assets");
 	system("cls");
 	switch (choice) {
 	case '1': {
@@ -466,9 +469,7 @@ void criminals::details_criminals() {
 }
 
 void start() {
-	//create_LOG();
 	check_if_superuser();
-	//hide_files(false);
 	menu m(true);
 	check_if_superuser();
 	if(!hide_files)
