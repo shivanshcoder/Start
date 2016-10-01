@@ -28,9 +28,9 @@ namespace Helpers {
 	};
 	struct person {
 		string name;
-		long long mobile_num;
+		vector<long long>mobile_num;
 		int age;
-		email id;
+		vector<email>id;
 		vector<Address>home;
 	};
 	struct Agent {

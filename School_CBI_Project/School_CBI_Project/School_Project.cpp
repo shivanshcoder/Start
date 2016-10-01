@@ -9,6 +9,14 @@ void assign(Agent &a, string username ,int lev);
 void check_if_superuser();
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched);
 
+template<class T>istream& operator >> (istream& is, vector<T>v) {
+	T a;
+	is >> a;
+	if (!is) return is;
+	v.push_back(a);
+	return is;
+}
+
 class credentials {
 public:
 	bool hidden;
@@ -397,21 +405,18 @@ void profiles::edit_profile() {
 	output << A;
 }
 void profiles::add_assets() {
-	char choice = credentials::disp(vector<string>{ "Add House","Add Car" }, "Add Assets");
+	char choice = credentials::disp(vector<string>{ "Add House","Add Car","Add Mobile Number","Add Email ID" }, "Add Assets");
 	system("cls");
 	switch (choice) {
-	case '1': {
-		Address a;
-		cin >> a;
-		A.p.home.push_back(a);
+	case '1': 
+		cin >> A.p.home;
 		break;
-	}
-	case '2': {
-		car_num c;
-		cin >> c;
-		A.car.push_back(c);
+	case '2': 
+		cin >> A.car;
 		break;
-	}
+	case '3':
+	//	cin>>
+		break;
 	case 27:
 		return;
 	default:

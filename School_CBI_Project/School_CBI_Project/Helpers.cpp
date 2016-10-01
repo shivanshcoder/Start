@@ -1,6 +1,12 @@
 #include"Helpers.h" 
 namespace Helpers {
-	
+	template<class T>istream& operator >> (istream& is, vector<T>v) {
+		T a;
+		is >> a;
+		if (!is) return is;
+		v.push_back(a);
+		return is;
+	}
 	void email::cls() {
 		username.clear();
 		domain.clear();
@@ -169,11 +175,12 @@ namespace Helpers {
 			input_int(is, "\nEnter  Age:", "Age", p.age);
 		}
 		cout << "\nEnter Mobile:";
-		input_int(is, p.mobile_num, 10);
+		input_int(is, p.mobile_num[0], 10);
 		is >> p.id;
-		Address a;
-		is >> a;
-		p.home.push_back(a);
+		//Address a;
+		//is >> a;
+		//p.home.push_back(a);
+		is >> p.home;
 		return is;
 	}
 	ostream& operator << (ostream& os, person& p){
@@ -212,7 +219,7 @@ namespace Helpers {
 	}
 
 	istream& operator >> (istream& is, Agent& a) {
-		string descrip;
+	//	string descrip;
 		is >> a.p;
 		input_int(is,"Enter Level:", "Level", a.level);
 		input_string(is, "Enter the Post:", a.post);
@@ -220,11 +227,12 @@ namespace Helpers {
 	//	is >> c;
 	//	a.car.push_back(c);
 		cout << "\nDescription:\n";
-		is >> descrip;
+		//is >> descrip;
 		a.description.clear();
 		while (is) {
-			a.description.push_back(descrip);
-			is >> descrip;
+			is >> a.description;
+		//	a.description.push_back(descrip);
+		//	is >> descrip;
 		}
 		is.clear();
 		return is;

@@ -1,5 +1,8 @@
 #pragma once
-#include"vector.h"
+//#include"vector.h"
+#include<conio.h>
+#include<string>
+#include<vector>
 #include<iostream>
 #include<iomanip>
 #include<fstream>
