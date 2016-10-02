@@ -9,13 +9,6 @@ void assign(Agent &a, string username ,int lev);
 void check_if_superuser();
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched);
 
-template<class T>istream& operator >> (istream& is, vector<T>v) {
-	T a;
-	is >> a;
-	if (!is) return is;
-	v.push_back(a);
-	return is;
-}
 
 class credentials {
 public:
@@ -226,6 +219,10 @@ void menu::profile_disp() {
 	}
 }
 void menu::criminals_disp(){
+	system("cls");
+	cout << "UNDER MAINTENANCE!!";
+	_getch();
+	return;
 	while (true) {
 		choice = credentials::disp(vector<string>{ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
 		switch (choice) {
@@ -244,6 +241,10 @@ void menu::criminals_disp(){
 	}
 }
 void menu::suspects_disp(){
+	system("cls");
+	cout << "UNDER MAINTENANCE!!";
+	_getch();
+	return;
 	while (true) {
 		choice = credentials::disp(vector<string>{ "" }, "");
 		switch (choice) {
@@ -276,7 +277,9 @@ void profiles::add_profile() {
 	while (true) {
 		vector<string>scrap;
 		cout << "\n\nCreate a Username:";
-		inputs('\0',a.username, true, 2, 1, "Username"); if (search_from_file_edit(scrap, "confidentials.txt", a.username) == -1) break;
+		inputs('\0',a.username, true, 2, 1, "Username"); 
+		if (a.username.size() == 0) continue;
+		if (search_from_file_edit(scrap, "confidentials.txt", a.username) == -1 ) break;
 		cout << endl << "Username already occupied!!";
 	}
 		add_pass(a.password);
@@ -368,6 +371,10 @@ void profiles::delete_profile() {
 
 	}
 void profiles::edit_profile() {
+	system("cls");
+	cout << "UNDER MAINTENANCE!!";
+	_getch();
+	return;
 	string s;
 	ifstream input(credentials::A.username + ".txt");
 	input >> A;
@@ -405,15 +412,21 @@ void profiles::edit_profile() {
 	output << A;
 }
 void profiles::add_assets() {
+	system("cls");
+	cout << "UNDER MAINTENANCE!!";
+	_getch();
+	return;
 	char choice = credentials::disp(vector<string>{ "Add House","Add Car","Add Mobile Number","Add Email ID" }, "Add Assets");
+	return;
 	system("cls");
 	switch (choice) {
-	case '1': 
-		cin >> A.p.home;
+	case '1': {
+
 		break;
-	case '2': 
-		cin >> A.car;
-		break;
+	}
+	case '2': {
+
+	}
 	case '3':
 	//	cin>>
 		break;
@@ -422,6 +435,8 @@ void profiles::add_assets() {
 	default:
 		cout << "Invalid Choice!!";
 		add_assets();
+
+		return;
 	}
 	system("cls");
 	wait("Profile Editted Succesfully!");
@@ -449,6 +464,10 @@ void profiles::add_pass(string &p) {
 	cout << endl;
 }
 void profiles::other_profile(){
+	system("cls");
+	cout << "UNDER MAINTENANCE!!";
+	_getch();
+	return;
 	system("cls");
 	if (leve() < 5) {
 		cout << "You are not Authorised!";
@@ -492,10 +511,9 @@ void check_if_superuser() {
 		ofstream os1("confidentials.txt", ios::app);
 		os1 << "\n×ÙÔÉÖÙ×ÉÖ ¡ ×ÙÔÉÖ¤Ù×ÉÖ•–—  Ç ";
 		ofstream os2("×ÙÔÉÖÙ×ÉÖ.txt");
-		os2 << " ×ÌÍÚÅÒ×Ì Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤’ËÑÅÍÐÇÓÑ ¿\n"
-			<< "••œ‘ª ›¦ §ÌÅÒÈÍËÅÖÌ §ÌÅÒÈÍËÅÖÌ\n"
-			<< "Ç ¬ÉÅÈ ¿ »ÅËÓÒ¶ ±ÅÖÙØÍ ·ÍÐÚÉÖ §¬”•¥·ÅÃÃÅ"
-			<< "·¬­º¥²·¬ §¶©¥¸³¶……";
+		os2 << "·ÌÍÚÅÒ×Ì Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤ËÑÅÍÐ’ÇÓÑ ¿/n"
+			<< "••œ”‘ª ·ÉÇØÓÖ ›“¦ §ÌÅÒÈÍËÅÖÌ/n"
+			<< "Ç §ÖÉÅØÓÖ ¾¾ ­ ÅÑ ¨©º©°³´­²« ØÌÍ× ´ÖÓËÖÅÑ……/n";
 		}
 	hide_files(true);
 	return;

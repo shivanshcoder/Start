@@ -1,12 +1,5 @@
 #include"Helpers.h" 
 namespace Helpers {
-	template<class T>istream& operator >> (istream& is, vector<T>v) {
-		T a;
-		is >> a;
-		if (!is) return is;
-		v.push_back(a);
-		return is;
-	}
 	void email::cls() {
 		username.clear();
 		domain.clear();
@@ -64,7 +57,6 @@ namespace Helpers {
 			return is;
 		}
 		e.id += s;
-		_getch();
 		return is;
 	}
 	ostream& operator << (ostream& os, email& e) {
@@ -175,26 +167,25 @@ namespace Helpers {
 			input_int(is, "\nEnter  Age:", "Age", p.age);
 		}
 		cout << "\nEnter Mobile:";
-		input_int(is, p.mobile_num[0], 10);
+		input_int(is, p.mobile_num, 10);
 		is >> p.id;
-		//Address a;
-		//is >> a;
-		//p.home.push_back(a);
-		is >> p.home;
+		Address k;
+		is >> k;
+		p.home.push_back(k);
 		return is;
 	}
 	ostream& operator << (ostream& os, person& p){
 		os << "\nName:" << p.name
 			<< "\nAge:" << p.age
-			<< "\nMobile Number:" << p.mobile_num
-			<< p.id;
+			<< "\nMobile Number:" << p.mobile_num;           ////error still to be fixed for multiple mobile nums
+		os	<< p.id;          //error still to be fixed for multiple mobile nums
 		for (int i = 0; i < p.home.size(); ++i)os << endl << p.home[i];
 		return os;
 	}
 	ifstream& operator >> (ifstream& is, person& p){
 		input_str(is, p.name, 100);
 		input_num(is, p.age,100,2);
-		input_num(is,p.mobile_num,100,10); 
+		input_num(is,p.mobile_num,100,10);       //error still to be fixed for multiple mobile nums
 		is >> p.id;
 		int j;
 		input_num(is, j, 100,1);
@@ -208,8 +199,8 @@ namespace Helpers {
 	ofstream& operator << (ofstream& os, person& p){
 		output_str(os, p.name, 100);
 		output_num(os, p.age, 100,2);
-		output_num(os, p.mobile_num, 100,10);
-		os << p.id;
+		output_num(os, p.mobile_num, 100,10);               ////error still to be fixed for multiple mobile nums
+		os << p.id;                     //error still to be fixed for multiple mobile nums
 		int k = p.home.size();
 		output_num(os,k,100,1);
 		os << "\n" ;
@@ -219,7 +210,7 @@ namespace Helpers {
 	}
 
 	istream& operator >> (istream& is, Agent& a) {
-	//	string descrip;
+		string descrip;
 		is >> a.p;
 		input_int(is,"Enter Level:", "Level", a.level);
 		input_string(is, "Enter the Post:", a.post);
@@ -227,12 +218,11 @@ namespace Helpers {
 	//	is >> c;
 	//	a.car.push_back(c);
 		cout << "\nDescription:\n";
-		//is >> descrip;
+		is >> descrip;
 		a.description.clear();
 		while (is) {
-			is >> a.description;
-		//	a.description.push_back(descrip);
-		//	is >> descrip;
+			a.description.push_back(descrip);
+			is >> descrip;
 		}
 		is.clear();
 		return is;

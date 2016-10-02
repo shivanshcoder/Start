@@ -10,7 +10,9 @@ namespace Helpers {
 	void force_close();
 
 	void create_LOG();
-
+	struct naming {
+		string ini, mid, last;
+	};
 	struct email {
 		string username, domain, id;
 		void cls();
@@ -28,9 +30,9 @@ namespace Helpers {
 	};
 	struct person {
 		string name;
-		vector<long long>mobile_num;
+		long long mobile_num;
 		int age;
-		vector<email>id;
+		email id;
 		vector<Address>home;
 	};
 	struct Agent {
