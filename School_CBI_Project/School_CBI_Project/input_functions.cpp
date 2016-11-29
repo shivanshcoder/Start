@@ -1,8 +1,6 @@
 
 #include"input_functions.h"
 
-
-
 	void inputs(istream& io, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
 		char c;
 		s.clear();         //if the loop login starts again the input fuction does not add password to the old password

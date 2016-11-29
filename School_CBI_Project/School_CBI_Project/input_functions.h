@@ -1,5 +1,6 @@
 #pragma once
-//#include"vector.h"
+#include<ctime>
+#include<algorithm>
 #include<conio.h>
 #include<string>
 #include<vector>

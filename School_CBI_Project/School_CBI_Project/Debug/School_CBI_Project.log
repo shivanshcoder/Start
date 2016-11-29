@@ -1,18 +1,19 @@
 ﻿  School_Project.cpp
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(70): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
-  c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(13): note: see declaration of 'credentials'
-  c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(45): note: see declaration of 'profiles'
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(70): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
-  c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(13): note: see declaration of 'credentials'
-  c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(58): note: see declaration of 'criminals'
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(70): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
-  c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(13): note: see declaration of 'credentials'
-  c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(66): note: see declaration of 'suspects'
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(159): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(356): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(357): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(499): warning C4551: function call missing argument list
-c:\users\mathu\documents\github\start\school_cbi_project\school_cbi_project\school_project.cpp(538): warning C4018: '<': signed/unsigned mismatch
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(70): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
+  c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(12): note: see declaration of 'credentials'
+  c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(45): note: see declaration of 'profiles'
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(70): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
+  c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(12): note: see declaration of 'credentials'
+  c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(58): note: see declaration of 'criminals'
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(70): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
+  c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(12): note: see declaration of 'credentials'
+  c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(66): note: see declaration of 'suspects'
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(132): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(162): warning C4018: '<': signed/unsigned mismatch
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(349): warning C4018: '<': signed/unsigned mismatch
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(350): warning C4018: '<': signed/unsigned mismatch
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(476): warning C4551: function call missing argument list
+c:\users\isha\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(516): warning C4018: '<': signed/unsigned mismatch
 Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
-  School_CBI_Project.vcxproj -> C:\Users\mathu\Documents\Github\Start\School_CBI_Project\Debug\School_CBI_Project.exe
-  School_CBI_Project.vcxproj -> C:\Users\mathu\Documents\Github\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)
+  School_CBI_Project.vcxproj -> C:\Users\ISHA\Source\Repos\Start\School_CBI_Project\Debug\School_CBI_Project.exe
+  School_CBI_Project.vcxproj -> C:\Users\ISHA\Source\Repos\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)
