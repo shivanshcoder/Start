@@ -1,94 +1,98 @@
 
 #include"input_functions.h"
 
-	void inputs(istream& io, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
-		char c;
-		s.clear();         //if the loop login starts again the input fuction does not add password to the old password
-		int alphanumeric_characters = 0, numerics = 0;
-		//io>>c;
-		inchar(io, c);
-		while (c != ch) {                 //to stop taking inputs once we press enter
-			cinclear(io);
-			s += c;
-			if (isdigit(c)) ++numerics;   //to check number of numericals
-			alphanumeric_characters += splchar(c);  //to check chec number of alphanumerical words
-			//io.get(c);
-			inchar(io, c);
-		}
-		if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
-			s.clear();
-			cout << '\n' << setw(35) << statement << " not strong enough!!\n"
-				<< setw(30) << "Atleast " << alpc_limit
-				<< " special characters and " << num_limit << " numericals\n";
-			inputs(io, s, true,num_limit,alpc_limit,statement);
-		}  //to  check strength of password usually
+void inputs(istream& io, string &s, bool alpha, int num_limit, int alpc_limit, string statement, char ch) {
+	char c;
+	s.clear();         //if the loop login starts again the input fuction does not add password to the old password
+	int alphanumeric_characters = 0, numerics = 0;
+	io.get(c);
+	while (c != ch) {                 //to stop taking inputs once we press enter
+		s += c;
+		//if (isdigit(c)) ++numerics;   //to check number of numericals
+	//	alphanumeric_characters += splchar(c);  //to check chec number of alphanumerical words
+		io.get(c);
 	}
-	void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, string statement) {
-		int alphanumeric_characters = 0, numerics = 0;
-		char c[20];
+	cinclear(io);  //checks if the stream is in good state
+	if (alpha&&check_constraint(s, alphanumeric_characters, numerics) && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
 		s.clear();
-		inchar_enter(c[0]);
-		if (isdigit(c[0])) ++numerics;   //to check number of numericals
-		alphanumeric_characters += splchar(c[0]);  //to check chec number of alphanumerical words
-		for (int i = 1; c[i] != 13; ++i) {
-			if (charac) {
-				cout << charac;
-			}
-			else
-				cout << c[i-1];
-			inchar_enter(c[i], { 13,8 });
-			if (isdigit(c[i])) ++numerics;   //to check number of numericals
-			alphanumeric_characters += splchar(c[i]);  //to check chec number of alphanumerical words
-			if (c[i] == 13) {
-				c[i] = '\0';
-				break;
-			}
-			while (c[i] == 8 && i > -1) {
-				cout << '\b';
-				cout << " ";
-				cout << '\b';
-				c[i] = '\0';
-				--i;
-				c[i] = _getch();
-				inchar_enter(c[i], { 8,13 });
-				while (i == 0 && c[i] == 8) {
-					c[i] = _getch();
-				}
-				//cinclear(cin);
-				//if (c[i] != 8) break;
-			}
+		cout << '\n' << setw(35) << statement << " not strong enough!!\n"
+			<< setw(30) << "Atleast " << alpc_limit
+			<< " special characters and " << num_limit << " numericals\n";
+		inputs(io, s, true, num_limit, alpc_limit, statement);
+	}  //to check the constraints of the string
+}
+void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, string statement) {
+	int alphanumeric_characters = 0, numerics = 0;
+	char c[20]; //max characters should me 20
+	s.clear();
+	inchar_enter(c[0]);
+
+	for (int i = 1; c[i] != 13; ++i) {
+		if (charac) //checks if a character is provided
+			cout << charac;
+		else
+			cout << c[i - 1];
+
+		inchar_enter(c[i], { 13,8 });
+
+	//	if (isdigit(c[i])) ++numerics;   //to check number of numericals
+		//alphanumeric_characters += splchar(c[i]);  //to check chec number of alphanumerical words
+
+		if (c[i] == 13) {  //checks if enter is pressed
+			c[i] = '\0';
+			break;
 		}
-		if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
-			s.clear();
-			cout << '\n' << setw(35) << statement << " not strong enough!!\n"
-				<< setw(30) << "Atleast " << alpc_limit
-				<< " special characters and " << num_limit << " numericals\n";
-			return;
-		}  //to  check strength of password usually
-		for (int i = 0; c[i] != '\0'; ++i) {
-			s += " ";
-			s[i] = c[i];
+		while (c[i] == 8 && i > 0) {  //when backspace is pressed
+			cout << '\b'; //gets cursor back
+			cout << " ";  //replaces the old value as space
+			cout << '\b'; //gets again the cursor on the space given in last step
+			c[i] = '\0';
+			--i; //decrease string length by 1
+			inchar_enter(c[i], { 8,13 });
 		}
 	}
+	check_constraint(s, alphanumeric_characters, numerics);
+	if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
+		s.clear();
+		cout << '\n' << setw(35) << statement << " not strong enough!!\n"
+			<< setw(30) << "Atleast " << alpc_limit
+			<< " special characters and " << num_limit << " numericals\n";
+		return;
+	}  //to  check if the constraints are fulfilled
+	for (int i = 0; c[i] != '\0'; ++i) { //fills the string to be returned
+		s += " "; //since originally the size of string is zero at starting of program
+		s[i] = c[i];
+	}
+}
 
 	void input_string(istream& io, string Question, string &ans) {
 		cout << Question;
 		io >> ans;
 	}
+	void input_line(istream& io, string& s) {
+		char c;
+		io.get(c);
+		while (c != '\n') {
+			s += c;
+			io.get(c);
+		}
+	}
+	void input_line(ifstream& io, string& s) {
+		char c;
+		io.get(c);
+		while (c != '\n') {
+			s += c;
+			io.get(c);
+		}
+	}
 
 	void input_int(istream& io, int& num) {
-		num = _getch();
-		if (!io) {
-			io.clear();
-			io.ignore(1000, '\n');
-		}
+		io >> num;
+		cinclear(io);
 	}
 	void input_int(istream& io, long long& num) {
 		io >> num;
-		if (!io) {
-			io.clear();
-			io.ignore(1000, '\n');
-		}
+		cinclear(io);
 	}
 	void input_int(istream& io, string statement, string type, int &num) {
 		while (true) {
@@ -136,7 +140,6 @@
 			else return;
 		}
 	}
-
 	int int_length(int num) {
 		int i = 0;
 		while (num != 0) {
@@ -155,30 +158,30 @@
 
 	}
 
-	bool cinclear(istream& io) {
+	bool cinclear(istream& io) {  //checks the state of input stream and corrects it 
 		if (!io) {
-			if (io.bad()) {
+			if (io.bad()) {  //if the input stream gets badly corrected
 				system("cls");
 				wait("Stream Got corrupted!!");
-				exit(0);
+				exit(0);   //the only chance is to exit program
 			}
-			else if (io.fail()) {
+			else if (io.fail()) {  //if the state is flagged than clear stream and continue
 				io.clear();
 				io.ignore(1000, '\n');
 				return false;
 			}
 		}
-		else return true;
+		else return true;  //if everything is fine
 	}
 
 	void hide_files(bool hide) {
 		fstream fs;
 		string file_name = "external_data.bat";
 		fs.open(file_name, ios::out);
-		if (hide)
+		if (hide)            //if the hide is true then hide files
 			fs << "attrib +r +a +s +h \"*.txt\" /s /d\n"
 			<< "exit";
-		else
+		else                 //if hte hide is false then unhide files
 			fs << "attrib -r -a -s -h \"*.txt\" /s /d\n"
 			<< "exit";
 		fs.close();
@@ -196,7 +199,14 @@
 		_getch();
 	}
 
-	int splchar(char c) {
+	bool check_constraint(string s, int& alphachar, int& numericals) {
+		for (int i = 0; i < s.size(); ++i) {
+			alphachar += splchar(s[i]);
+			if (isdigit(s[i]))numericals++;
+		}
+		return true;
+	}
+	int splchar(char c) {  //checks if the character is a special character and returns true
 		switch (c) {
 		case '~': case '`': case '!': case '@': case '#': case '$': case '%': case '^': case '&': case '*': case '(': case ')':
 		case '-': case '_': case '+': case '=': case '\'': case '|': case ']': case '[': case '{': case '}': case ';': case ':':
@@ -207,38 +217,29 @@
 			return 0;
 		}
 	}
-
-	void inchar(istream& in,char& c) {
-		in >> c;
-		cinclear(in);
-	}
-	void getchar(istream& in, char& c) {
-		in.get(c);
-		cinclear(cin);
-	}
 		
 	void inchar_enter(char& c) {
 		c = _getch();
-		while (c < 0 || c>255) {
+		while (c < 0 || c>255) { //because such values are commonly combination of two characters
 			c = _getch();
 			c = _getch();
 		}
 		if (isalpha(c)|| isdigit(c) || splchar(c))return;
-		inchar_enter(c);
+		inchar_enter(c);//if it is not a desired value call the function recursively
 	}
 	void inchar_enter(char& c, vector<int>splchars) {
 		c = _getch();
-		while (c < 0 || c>255) {
+		while (c < 0 || c>255) {  //because such values are commonly combination of two characters
 			c = _getch();
 			c = _getch();
 		}
 		if (isalpha(c) || isdigit(c) || splchar(c))return;
-		for (int i = 0; i < splchars.size(); ++i) {
+		for (int i = 0; i < splchars.size(); ++i) { // checks if it is a specified ascii character
 			if (splchars[i] == c)return;
 		}
-		inchar_enter(c);
+		inchar_enter(c,splchars); //if it is not a desired value call the function recursively
 	}
-	void string_enter(string& s, char charac) {
+	void string_enter(string& s, char charac) { //same function as inputs just there is no constraints on string entered
 		char c[20];
 		s.clear();
 		inchar_enter(c[0]);
@@ -273,7 +274,7 @@
 			s += " ";
 			s[i] = c[i];
 		}
-	}
+	}       
 
 	namespace encryption {
 
@@ -284,6 +285,7 @@
 			z += 90;
 			for (int i = 0; i < digit; ++i) {
 				is >> c;
+				if (c == '\n')return;
 				a = c;
 				a -= z;
 				char r = a;
@@ -291,7 +293,7 @@
 				n = n + pow(10, i)*h;
 			}
 		}     //to be tested
-		void output_num(ofstream& os, int n, int z,int digit) {
+		void output_num(ofstream& os, int n, int z,int digit ) {
 			if (int_length(n) < digit) {
 				char c = 190;
 				os << c;
@@ -313,6 +315,7 @@
 			z += 90;
 			for (int i = 0; i < digit; ++i) {
 				is >> c;
+				if (c == '\n')return;
 				a = c;
 				a -= z;
 				char r = a;
@@ -355,12 +358,22 @@
 			}
 		}
 
-		void output_line(ofstream& os, vector<string>s, int z) {
+
+		void input_line(ifstream& is, string s, int z) {    
+			char c;
+			input_char(is, c, z);
+			while (is&&c!='\n') {
+				s += c;
+				input_char(is, c, z);
+			}
+		}
+
+		void output_para(ofstream& os, vector<string>s, int z) {
 			for (int i = 0; i < s.size(); ++i) {
 				output_str(os, s[i], z);
 			}
 		}
-		void input_line(ifstream& is, vector<string>&s, int z) {    //need to tackle with vector pointer
+		void input_para(ifstream& is, vector<string>&s, int z) {
 			string c;
 			input_str(is, c, z);
 			while (is) {

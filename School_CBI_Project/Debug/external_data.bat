@@ -1,2 +1,2 @@
-attrib -r -a -s -h "*.txt" /s /d
+attrib +r +a +s +h "*.txt" /s /d
 exit

@@ -10,7 +10,10 @@ namespace Helpers {
 	void force_close();
 	void login_session(int start);
 	void add_LOG(string username);
-
+	void see_log();
+	struct names {
+		string name;
+	};
 	struct paragraph {
 		vector<string>para;
 	};
@@ -30,7 +33,7 @@ namespace Helpers {
 		int num_last;
 	};
 	struct person {
-		string name;
+		names name;
 		vector<Address>home;
 		long long mobile_num;
 		int age;
@@ -59,6 +62,8 @@ namespace Helpers {
 		vector<vehicle>cars;
 		vector<string>cause;
 	};
+	istream& operator >> (istream& is, names& s);
+
 	istream& operator >> (istream& is, paragraph& para);
 	ostream& operator << (ostream& os, paragraph& para);
 	ifstream& operator >> (ifstream& is, paragraph& para);

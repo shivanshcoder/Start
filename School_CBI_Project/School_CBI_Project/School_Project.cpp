@@ -53,7 +53,7 @@ protected:
 	void edit_profile();
 	void other_profile();
 	void add_pass(string &p);
-	Agent A;
+//	Agent A;
 };
 class criminals : private credentials {
 public:
@@ -70,7 +70,8 @@ public:
 class menu : private credentials, profiles, criminals, suspects{
 public:
 	menu(bool to_displayornot) : credentials(to_displayornot),profiles(credentials::user(),credentials::leve()),   //all other class variables are initialized 
-		criminals(credentials::user(), credentials::leve()), suspects(credentials::user(), credentials::leve()) {  //according to menu and credentials variables
+		criminals(credentials::user(), credentials::leve()), suspects(credentials::user(), credentials::leve()) 
+	{  //according to menu and credentials variables
 		if (credentials::granted()) {
 			main_disp();                     //Displays the main menu
 		}
@@ -81,7 +82,7 @@ public:
 	void main_disp();
 	void profile_disp();
 	void criminals_disp();
-	void suspects_disp();
+//	void suspects_disp();
 	char choice;
 
 };
@@ -91,7 +92,7 @@ void credentials::Logout(bool exit) {
 	eligibility = false;          //sets Eligibility to use the Program to false, user needs to relogin!
 	wait_sp("You have been Logged out Successfully", 35,true);
 	login_session(session);
-	if (exit) return;
+	if (exit) return;  //checks if user just wants to logout or exit program
 	start();
 }
 void credentials::Login() {
@@ -103,13 +104,15 @@ void credentials::Login() {
 
 	cout << "\n\n\n\n\n\n\n";
 	wait_sp("Login ID:", 35, false); //displays the string according to line spacing
-	string_enter(A.username);          //Takes the Username
+	inputs('\0', A.username);
+	//string_enter(A.username);          //Takes the Username
 	if (A.username == "exit") exit(0); //If user enters exit the program ends
-
+	//cout << endl << A.username;
 	cout << "\n";
 
 	wait_sp("Password:", 35,false);
-	string_enter(A.password,'*');   //Calls the character input string function and enters the password securely
+	inputs('*', A.password);
+//	string_enter(A.password,'*');   //Calls the character input string function and enters the password securely
 	if (A.password == "exit") exit(0); //If user enters exit the program ends
 
 	ifstream ifs("confidentials.txt");
@@ -119,10 +122,14 @@ void credentials::Login() {
 	}
 
 	while (true) {//starts taking information available in the confidential file
+		/*input_str(ifs, id_real, 105);
+		input_char(ifs, c, 112);
+		input_str(ifs, id_passs, 117);
+		input_num(ifs, leve, 124,1);	*/
 		input_str(ifs, id_real, 100);
 		input_char(ifs, c, 100);
 		input_str(ifs, id_passs, 100);
-		input_num(ifs, leve, 100,1);
+		input_num(ifs, leve, 100, 1);
 		if (!ifs) {     //if there is no information according to details entered available
 			eligibility = false;
 			wait_sp("Wrong Password!", 40,true);
@@ -132,7 +139,7 @@ void credentials::Login() {
 			session = time(0);
 			add_LOG(A.username);
 			eligibility = true; //sets user eligibility to use program to true
-			A.level = leve;   //sets user's level accoeding to information available fro confidential file
+			A.level = leve;   //sets user's level accoeding to information available for confidential file
 			system("cls");
 			ifs.close();
 			return;
@@ -171,7 +178,7 @@ int credentials::disp(vector<string>list, string heading) {
 
 void menu::main_disp() {
 	while (true) {
-		choice = credentials::disp(vector<string>{ "Manage Profiles","Criminals","Suspects","Log Out","Exit" }, "CBI");
+		choice = credentials::disp(vector<string>{ "Manage Profiles","Criminals","Log Out","Exit" }, "CBI");
 		switch (choice) {
 		case '1':
 			profile_disp();
@@ -180,15 +187,12 @@ void menu::main_disp() {
 			criminals_disp();
 			break;
 		case '3':
-			suspects_disp();
-			break;
-		case '4':
-			credentials::Logout();
+			credentials::Logout(false);  //in order to continue session
 			return;
 		case 27 :           //For the case if User presses Escape button
-		case '5':
+		case '4':
 			system("cls");
-			credentials::Logout(true);
+			credentials::Logout(true);  //in order to exit program
 			return;
 		default:
 			cout << "Not Valid!!!";
@@ -223,7 +227,7 @@ void menu::profile_disp() {
 void menu::criminals_disp(){
 	while (true) {
 		choice = credentials::disp(vector<string>{ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
-		switch (choice) {
+		switch (choice){
 		case '1':
 			break;
 		case '2':
@@ -238,29 +242,13 @@ void menu::criminals_disp(){
 		}
 	}
 }
-void menu::suspects_disp(){
-	while (true) {
-		choice = credentials::disp(vector<string>{ "" }, "");
-		switch (choice) {
-		case '1':
-			break;
-		case '2':
-			break;
-		case '3':
-			break;
-		case '4':
-		case 27:       //For the case if User presses Escape button
-			return;
-		default:
-			cout << "Invalid Choice!!";
-		}
-	}
-} 
 
 void profiles::add_profile() {
 	system("cls");
 	Agent a;
+
 	hide_files(false);
+
 	credentials::hidden = false;
 	cout << setw(44) << "Add Profile\n";
 	if (leve() < 4) {
@@ -280,12 +268,12 @@ void profiles::add_profile() {
 		ofstream ofs;
 		ofs.open("confidentials.txt", ios::app);
 		ofs << ' ';
-		output_str(ofs, a.username, 100);
-		output_char(ofs, '=', 100);
+		output_str(ofs, a.username, 105);
+		output_char(ofs, '=', 112);
 		ofs << ' ';
-		output_str(ofs, a.password, 100);
+		output_str(ofs, a.password, 117);
 		ofs << ' ';
-		output_num(ofs, a.level, 100, 1);
+		output_num(ofs, a.level, 124,1);
 		ofs.close();
 		cin >> a;
 		ofstream out(encrypt(a.username,100) + ".txt");
@@ -307,39 +295,34 @@ void profiles::your_profile() {
 }
 void profiles::delete_profile() {
 	system("cls");
-	string ans,username;
+	int ans;
+	string tmp;
+	string username;
 	hide_files(false);
 	hidden = false;
 	if (leve() > 6) {
-		input_string(cin,"Do you want to delete your ID or others(your/other)?", ans);
-		if (ans == "your"||ans == "mine") {
-			input_string(cin,"Are you sure(yes/no)",ans);
-			if (ans == "yes")
-				username = user();
-			else
-				return;
+		input_int(cin,"Do you want to delete your ID(1) or others(2)?","int", ans);
+		if (ans == 1) {
+			input_string(cin,"Are you sure(yes/no)",tmp);
+			if (tmp == "yes") username = user();
+			else return;
 		}
-		else if (ans == "other") {
+		else if (ans == 2) {
 			cout << "Enter username:";
 			cin >> username;
 		}
-		else {
-			wait("invalid answer");
-			return;
-		}
 	}
 	else {
-		input_string(cin,"Are you sure(yes/no)", ans);
-		if (ans == "yes")
-			username = user();
-		else
-			return;
+		input_string(cin,"Are you sure(yes/no)", tmp);
+		if (tmp == "yes") username = user();
+		else return;
 	}
 	string file = encrypt(username,100) + ".txt";
 	remove(file.c_str());
+
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", username);
-
+	
 	if (i == -1) {
 		cout << "\nRecord of " << username << " not available!!";
 		_getch();
@@ -347,8 +330,9 @@ void profiles::delete_profile() {
 	}
 	ofstream write("confidentials.txt");
 	for (int j = 0; j < data.size()-1; j+=4) {
-		if (j == i && j + 4 < data.size() - 1) j += 4;
-		cout << endl << data[j] << " " << data[j + 1] << " " << data[j + 2] << " " << data[j + 3] << endl;
+		if (j == i && j + 4 < data.size() - 1) j += 4;/*
+		cout << 'j' << ' '<<j <<' ' <<'i' << i << endl;
+		cout << endl << data[j] << " " << data[j + 1] << " " << data[j + 2] << " " << data[j + 3] << endl;*/
 		output_str(write, data[j], 100);
 		output_str(write, data[j+1], 100);
 		write << " ";
@@ -364,18 +348,20 @@ void profiles::delete_profile() {
 
 	}
 void profiles::edit_profile() {
+	cout << encrypt(credentials::A.username, 100) + ".txt";
+	system("pause");
 	string s;
-	ifstream input(credentials::A.username + ".txt");
+	ifstream input(encrypt(credentials::A.username,100) + ".txt");
 	input >> A;
 	int choice = credentials::disp(vector<string>{"Change password","Edit Description","Add Assets"}, "Edit");
-	switch (choice){
+	switch (choice) {
 	case 1: {
 		string s;
 		for (int i = 0; i < 5; ++i) {
 			vector<string>temp;
-			input_string(cin,"Enter Old Password:", s);
-			if( search_from_file_edit(temp, s, "confidentials.txt") == -1) wait("Passwords don't match!!");
-			if(temp[i-2]!=user())wait("Passwords don't match!!");
+			input_string(cin, "Enter Old Password:", s);
+			if (search_from_file_edit(temp,"confidentials.txt", s ) == -1) wait("Passwords don't match!!");
+			if (temp[i - 2] != user())wait("Passwords don't match!!");
 			add_pass(s);
 			temp[i] = s;
 			ofstream ofs;
@@ -385,28 +371,35 @@ void profiles::edit_profile() {
 		}
 		break;
 	}
-	case 2:
-		cin>>A.description;
+	case 2: {
+		cin >> A.description;
 		cin.clear();
 		break;
-	case 3:
-		add_assets();
-			break;
 	}
+	case 3: {
+		cout << "oh";
+		system("pause");
+		add_assets();
+		break;
+	}
+	}
+	
 	ofstream output(encrypt(credentials::A.username,100) + ".txt");
 	output << A;
 }
 void profiles::add_assets() {
-	char choice = credentials::disp(vector<string>{ "Add House","Add Car" }, "Add Assets");
+	cout << "bye";
+	system("pause");
+	int choice = credentials::disp(vector<string>{ "Add House","Add Car" }, "Add Assets");
 	system("cls");
 	switch (choice) {
-	case '1': {
+	case 1: {
 		Address a;
 		cin >> a;
 		A.p.home.push_back(a);
 		break;
 	}
-	case '2': {
+	case 2: {
 		vehicle c;
 		cin >> c;
 		A.car.push_back(c);
@@ -437,10 +430,10 @@ void profiles::add_pass(string &p) {
 		add_pass(p);
 	}
 	if (p2 == A.username) {
-		wait("Password is not strong since USERNAME and PASSWORD matches!!");
+		wait("Password is not strong since USERNAME and PASSWORD match!!");
 		add_pass(p);
 	}
-	p = p2;
+	p = p2; //sets the password
 	cout << endl;
 }
 void profiles::other_profile(){
@@ -457,7 +450,7 @@ void profiles::other_profile(){
 
 void criminals::add_criminals(){
 	system("cls");
-	cin>>
+	//cin>>
 }     
 void criminals::edit_criminals(){
 
@@ -483,7 +476,7 @@ void start() {
 }
 void check_if_superuser() {
 	vector<string>data;
-	int i = search_from_file_edit(data, "confidentials.txt", "вытижывиж");
+	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
 	if (i == -1) {
 		hide_files(false);
 		ofstream os1("confidentials.txt", ios::app);
@@ -507,7 +500,7 @@ void assign(Agent &a, string username, int lev) {
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched) {
 	ifstream fs(file);
 	string s;
-	to_be_searched = decrypt(to_be_searched, 100);
+	to_be_searched = to_be_searched;
 	while (fs) {
 		input_str(fs, s, 100);
 		data.push_back(s);
@@ -537,4 +530,6 @@ void SELF_DESTRUCT() {
 }
 int main() {
 	start();    //Starts up the Starting function
+	see_log();
+	system("pause");
 }

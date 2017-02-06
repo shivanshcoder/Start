@@ -10,10 +10,10 @@
 
 using namespace std;
 
-void inchar(istream& in, char& c);
 void inchar_enter(char& c);
 void inchar_enter(char& c, vector<int>splchars);
 
+bool check_constraint(string s, int& alphachar, int& numericals);
 int splchar(char c);
 
 int int_length(int num);
@@ -22,6 +22,8 @@ int long_length(long long num);
 void hide_files(bool hide);
 bool cinclear(istream& is);
 
+void input_line(istream& io, string& s);
+void input_line(ifstream& io, string& s);
 
 	void input_int(istream& io,string statement, string type, int &num);
 	void input_int(istream& io,long long& num, int digits);
@@ -35,6 +37,7 @@ bool cinclear(istream& is);
 	void string_enter(string& s, char charac = '\0');
 	void wait(string s);
 	void wait_sp(string s, int z,bool k);
+
 	
 	namespace encryption {
 
@@ -49,8 +52,10 @@ bool cinclear(istream& is);
 		void input_str(ifstream& is, string& s, int z);
 		void output_str(ofstream& os, string s, int z);
 
-		void input_line(ifstream& is, vector<string>&s, int z);
-		void output_line(ofstream& os, vector<string> s, int z);
+		void input_line(ifstream& is, string s, int z);
+
+		void output_para(ofstream& os, vector<string>s, int z);
+		void input_para(ifstream& is, vector<string>&s, int z);
 
 		string encrypt(string s,int z);
 		string decrypt(string s, int z);
