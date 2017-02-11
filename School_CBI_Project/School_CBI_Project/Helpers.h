@@ -10,7 +10,7 @@ namespace Helpers {
 	void force_close();
 	void login_session(int start);
 	void add_LOG(string username);
-	void see_log();
+//	void see_log();
 	struct names {
 		string name;
 	};

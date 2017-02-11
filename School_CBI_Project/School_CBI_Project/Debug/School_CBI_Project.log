@@ -1,15 +1,19 @@
-﻿  input_functions.cpp
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(203): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(237): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(293): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(298): warning C4309: 'initializing': truncation of constant value
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(323): warning C4244: '=': conversion from 'double' to '__int64', possible loss of data
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(349): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(356): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(372): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(386): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(392): warning C4018: '<': signed/unsigned mismatch
-c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\input_functions.cpp(175): warning C4715: 'cinclear': not all control paths return a value
+﻿  School_Project.cpp
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(71): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'profiles'
+  c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(13): note: see declaration of 'credentials'
+  c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(46): note: see declaration of 'profiles'
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(71): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'criminals'
+  c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(13): note: see declaration of 'credentials'
+  c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(59): note: see declaration of 'criminals'
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(71): warning C4584: 'menu': base-class 'credentials' is already a base-class of 'suspects'
+  c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(13): note: see declaration of 'credentials'
+  c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(67): note: see declaration of 'suspects'
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(140): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(170): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(338): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(381): warning C4018: '<': signed/unsigned mismatch
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(482): warning C4551: function call missing argument list
+c:\users\mathu\source\repos\start\school_cbi_project\school_cbi_project\school_project.cpp(522): warning C4018: '<': signed/unsigned mismatch
 Helpers.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
   School_CBI_Project.vcxproj -> C:\Users\mathu\Source\Repos\Start\School_CBI_Project\Debug\School_CBI_Project.exe
   School_CBI_Project.vcxproj -> C:\Users\mathu\Source\Repos\Start\School_CBI_Project\Debug\School_CBI_Project.pdb (Full PDB)

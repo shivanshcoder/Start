@@ -23,18 +23,17 @@ void inputs(istream& io, string &s, bool alpha, int num_limit, int alpc_limit, s
 }
 void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, string statement) {
 	int alphanumeric_characters = 0, numerics = 0;
-	char c[20]; //max characters should me 20
+	string c; //max characters should me 20
+	c.resize(20);
 	s.clear();
 	inchar_enter(c[0]);
-
+	
 	for (int i = 1; c[i] != 13; ++i) {
 		if (charac) //checks if a character is provided
 			cout << charac;
 		else
-			cout << c[i - 1];
-
+			cout << c[i-1];
 		inchar_enter(c[i], { 13,8 });
-
 	//	if (isdigit(c[i])) ++numerics;   //to check number of numericals
 		//alphanumeric_characters += splchar(c[i]);  //to check chec number of alphanumerical words
 
@@ -48,10 +47,14 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 			cout << '\b'; //gets again the cursor on the space given in last step
 			c[i] = '\0';
 			--i; //decrease string length by 1
-			inchar_enter(c[i], { 8,13 });
+			inchar_enter(c[i], { 8,13 }); 
+			while (i == 0 && c[i] == 8) {
+				c[i] = _getch();
+			}
 		}
+		
 	}
-	check_constraint(s, alphanumeric_characters, numerics);
+	check_constraint(c, alphanumeric_characters, numerics);
 	if (alpha && (numerics < num_limit || alphanumeric_characters < alpc_limit)) {
 		s.clear();
 		cout << '\n' << setw(35) << statement << " not strong enough!!\n"
@@ -63,6 +66,7 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 		s += " "; //since originally the size of string is zero at starting of program
 		s[i] = c[i];
 	}
+	cout << endl << s;
 }
 
 	void input_string(istream& io, string Question, string &ans) {
@@ -358,22 +362,12 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 			}
 		}
 
-
-		void input_line(ifstream& is, string s, int z) {    
-			char c;
-			input_char(is, c, z);
-			while (is&&c!='\n') {
-				s += c;
-				input_char(is, c, z);
-			}
-		}
-
-		void output_para(ofstream& os, vector<string>s, int z) {
+		void output_line(ofstream& os, vector<string>&s, int z) {
 			for (int i = 0; i < s.size(); ++i) {
 				output_str(os, s[i], z);
 			}
 		}
-		void input_para(ifstream& is, vector<string>&s, int z) {
+		void input_line(ifstream& is, vector<string>&s, int z) {    //need to tackle with vector pointer
 			string c;
 			input_str(is, c, z);
 			while (is) {

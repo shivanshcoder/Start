@@ -52,10 +52,8 @@ void input_line(ifstream& io, string& s);
 		void input_str(ifstream& is, string& s, int z);
 		void output_str(ofstream& os, string s, int z);
 
-		void input_line(ifstream& is, string s, int z);
-
-		void output_para(ofstream& os, vector<string>s, int z);
-		void input_para(ifstream& is, vector<string>&s, int z);
+		void output_line(ofstream& is, vector<string>&s, int z);
+		void input_line(ifstream& is, vector<string>&s, int z);
 
 		string encrypt(string s,int z);
 		string decrypt(string s, int z);

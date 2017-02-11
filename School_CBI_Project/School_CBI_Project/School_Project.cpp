@@ -1,5 +1,6 @@
 #include"Helpers.h"
 
+
 using namespace std;
 using namespace Helpers;
 
@@ -7,7 +8,7 @@ void start();
 void assign(Agent &a, string username ,int lev);
 
 void check_if_superuser();
-int search_from_file_edit(vector<string>&data, string file, string to_be_searched);
+int search_from_file_edit(vector<string>&data, string file, string to_be_searched,int encrypt);
 
 class credentials {
 public:
@@ -53,7 +54,7 @@ protected:
 	void edit_profile();
 	void other_profile();
 	void add_pass(string &p);
-//	Agent A;
+	Agent A;
 };
 class criminals : private credentials {
 public:
@@ -122,10 +123,10 @@ void credentials::Login() {
 	}
 
 	while (true) {//starts taking information available in the confidential file
-		/*input_str(ifs, id_real, 105);
-		input_char(ifs, c, 112);
-		input_str(ifs, id_passs, 117);
-		input_num(ifs, leve, 124,1);	*/
+	/*	input_str(ifs, id_real, 100);
+		input_char(ifs, c, 100);
+		input_str(ifs, id_passs, 100);
+		input_num(ifs, leve, 100,1);	*/
 		input_str(ifs, id_real, 100);
 		input_char(ifs, c, 100);
 		input_str(ifs, id_passs, 100);
@@ -260,20 +261,22 @@ void profiles::add_profile() {
 		vector<string>scrap;
 		cout << "\n\nCreate a Username:";
 		inputs('\0',a.username, true, 2, 1, "Username");
-		if (search_from_file_edit(scrap, "confidentials.txt", a.username) != -1)
+		if (search_from_file_edit(scrap, "confidentials.txt", a.username, 100) != -1) {
 			cout << endl << "Username already occupied!!";
+			a.username.clear();
+		}
 	}
 		add_pass(a.password);
 		
 		ofstream ofs;
 		ofs.open("confidentials.txt", ios::app);
 		ofs << ' ';
-		output_str(ofs, a.username, 105);
-		output_char(ofs, '=', 112);
+		output_str(ofs, a.username, 100);
+		output_char(ofs, '=', 100);
 		ofs << ' ';
-		output_str(ofs, a.password, 117);
+		output_str(ofs, a.password, 100);
 		ofs << ' ';
-		output_num(ofs, a.level, 124,1);
+		output_num(ofs, a.level, 100,1);
 		ofs.close();
 		cin >> a;
 		ofstream out(encrypt(a.username,100) + ".txt");
@@ -319,25 +322,23 @@ void profiles::delete_profile() {
 	}
 	string file = encrypt(username,100) + ".txt";
 	remove(file.c_str());
-
+	cout << username;
+	system("pause");
 	vector<string>data;
-	int i = search_from_file_edit(data, "confidentials.txt", username);
+	int i = search_from_file_edit(data, "confidentials.txt", username,100);
 	
 	if (i == -1) {
 		cout << "\nRecord of " << username << " not available!!";
 		_getch();
 		return;
 	}
+	cout << data.size() << endl;
 	ofstream write("confidentials.txt");
-	for (int j = 0; j < data.size()-1; j+=4) {
-		if (j == i && j + 4 < data.size() - 1) j += 4;/*
-		cout << 'j' << ' '<<j <<' ' <<'i' << i << endl;
-		cout << endl << data[j] << " " << data[j + 1] << " " << data[j + 2] << " " << data[j + 3] << endl;*/
+	data.erase(data.begin() + i, data.begin() + i + 3);
+	for (int j = 0; j < data.size()-1; j++) {
 		output_str(write, data[j], 100);
-		output_str(write, data[j+1], 100);
-		write << " ";
-		output_str(write, data[j+2], 100);
-		output_str(write, data[j+3], 100);
+		write << ' ';
+		if (j % 4 == 0)write << endl;
 		}
 	write.close();
 	_getch();
@@ -348,37 +349,50 @@ void profiles::delete_profile() {
 
 	}
 void profiles::edit_profile() {
-	cout << encrypt(credentials::A.username, 100) + ".txt";
+	hide_files(false);
+	cout << credentials::A.username + ".txt";
 	system("pause");
 	string s;
 	ifstream input(encrypt(credentials::A.username,100) + ".txt");
-	input >> A;
-	int choice = credentials::disp(vector<string>{"Change password","Edit Description","Add Assets"}, "Edit");
+	//input >> A;
+	char choice = credentials::disp(vector<string>{"Change password","Edit Description","Add Assets"}, "Edit");
+	cout << choice;
+	cinclear(cin);
+	system("pause");
 	switch (choice) {
-	case 1: {
+	case '1': {
 		string s;
-		for (int i = 0; i < 5; ++i) {
 			vector<string>temp;
 			input_string(cin, "Enter Old Password:", s);
-			if (search_from_file_edit(temp,"confidentials.txt", s ) == -1) wait("Passwords don't match!!");
-			if (temp[i - 2] != user())wait("Passwords don't match!!");
+			cout << A.username;
+			system("pause");
+			int index = search_from_file_edit(temp, "confidentials.txt", user(), 100);
+			cout << temp[index] << endl;;
+			if (temp[index + 3] != s) {
+				cout << temp[index + 3] << "  " << s << endl;
+				wait("Passwords don't match!!");
+				break;
+			}
+		//	if (temp[i+2] != user())wait("Passwords don't match!!");
 			add_pass(s);
-			temp[i] = s;
+			temp[index + 3] = s;
 			ofstream ofs;
 			ofs.open("confidentials.txt", ios::app);
+			for (int j = 0; j < temp.size() - 1; j++) {
+				output_str(ofs, temp[j], 100);
+				ofs << ' ';
+				if (j % 4 == 0)ofs << endl;
+			}
 			ofs.close();
+			system("pause");
 			break;
-		}
-		break;
 	}
-	case 2: {
+	case '2': {
 		cin >> A.description;
 		cin.clear();
 		break;
 	}
-	case 3: {
-		cout << "oh";
-		system("pause");
+	case '3': {
 		add_assets();
 		break;
 	}
@@ -388,18 +402,16 @@ void profiles::edit_profile() {
 	output << A;
 }
 void profiles::add_assets() {
-	cout << "bye";
-	system("pause");
-	int choice = credentials::disp(vector<string>{ "Add House","Add Car" }, "Add Assets");
+	char choice = credentials::disp(vector<string>{ "Add House","Add Car" }, "Add Assets");
 	system("cls");
 	switch (choice) {
-	case 1: {
+	case '1': {
 		Address a;
 		cin >> a;
 		A.p.home.push_back(a);
 		break;
 	}
-	case 2: {
+	case '2': {
 		vehicle c;
 		cin >> c;
 		A.car.push_back(c);
@@ -476,13 +488,13 @@ void start() {
 }
 void check_if_superuser() {
 	vector<string>data;
-	int i = search_from_file_edit(data, "confidentials.txt", "superuser");
+	int i = search_from_file_edit(data, "confidentials.txt", "superuser",100);
 	if (i == -1) {
 		hide_files(false);
 		ofstream os1("confidentials.txt", ios::app);
 		os1 << "\n×ÙÔÉÖÙ×ÉÖ ¡ ×ÙÔÉÖ¤Ù×ÉÖ•–—  Ç ";
 		ofstream os2("×ÙÔÉÖÙ×ÉÖ.txt");
-		os2 << " ×ÌÍÚÅÒ×Ì Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤’ËÑÅÍÐÇÓÑ ¿\n"
+		os2 << " ×ÌÍÚÅÒ×Ì Å¿ Á  ¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤’ËÑÅÍÐÇÓÑ ¿\n"
 			<< "••œ‘ª ›¦ §ÌÅÒÈÍËÅÖÌ §ÌÅÒÈÍËÅÖÌ\n"
 			<< "Ç ¬ÉÅÈ ¿ »ÅËÓÒ¶ ±ÅÖÙØÍ ·ÍÐÚÉÖ §¬”•¥·ÅÃÃÅ"
 			<< "·¬­º¥²·¬ §¶©¥¸³¶……";
@@ -497,12 +509,12 @@ void assign(Agent &a, string username, int lev) {
 	ifstream input(username + ".txt");
 	input >> a;
 }
-int search_from_file_edit(vector<string>&data, string file, string to_be_searched) {
+int search_from_file_edit(vector<string>&data, string file, string to_be_searched,int encrypt) {
 	ifstream fs(file);
 	string s;
 	to_be_searched = to_be_searched;
 	while (fs) {
-		input_str(fs, s, 100);
+		input_str(fs, s, encrypt);
 		data.push_back(s);
 	}
 	int i = 0;
@@ -530,6 +542,6 @@ void SELF_DESTRUCT() {
 }
 int main() {
 	start();    //Starts up the Starting function
-	see_log();
+	//see_log();
 	system("pause");
 }
