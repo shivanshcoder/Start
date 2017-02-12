@@ -41,7 +41,6 @@ protected:
 	bool eligibility;
 private:
 	int session;
-
 };
 class profiles : private credentials {
 public:
@@ -90,6 +89,8 @@ public:
 
 void credentials::Logout(bool exit) {
 	system("cls");
+	A.username.clear();
+	A.password.clear();
 	eligibility = false;          //sets Eligibility to use the Program to false, user needs to relogin!
 	wait_sp("You have been Logged out Successfully", 35,true);
 	login_session(session);
@@ -121,7 +122,6 @@ void credentials::Login() {
 		wait("Error!!!");
 		exit(0);
 	}
-
 	while (true) {//starts taking information available in the confidential file
 	/*	input_str(ifs, id_real, 100);
 		input_char(ifs, c, 100);
@@ -198,11 +198,10 @@ void menu::main_disp() {
 		default:
 			cout << "Not Valid!!!";
 		}
-
 	}
 }
 void menu::profile_disp() {
-	while (true) {
+	while (credentials::eligibility) {
 		choice = credentials::disp(vector<string>{ "Your profile","Delete Profile","Add Profile","Edit Profile", "Back to Main Menu" }, "PROFILES");
 		switch (choice) {
 		case '1':
@@ -226,7 +225,7 @@ void menu::profile_disp() {
 	}
 }
 void menu::criminals_disp(){
-	while (true) {
+	while (credentials::eligibility) {
 		choice = credentials::disp(vector<string>{ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
 		switch (choice){
 		case '1':
