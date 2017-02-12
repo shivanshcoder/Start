@@ -5,7 +5,6 @@ using namespace Helpers;
 
 void start();
 void end();
-void assign(Agent &a, string username ,int lev);
 
 void check_if_superuser();
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched,int encrypt);
@@ -25,26 +24,26 @@ public:
 	}          //For takeing the Logging details
 	credentials(string username,int lev){  //this constructor copies the value of variables as assigned in credentials initally to the variables of sub classes
 		hidden = true;
-		assign(A,username, lev);
+		assign(id,username, lev);
 	}
-protected:
-	Agent A;
+	int disp(vector<string>list, string heading);
 	bool granted() { return eligibility; }
-	string user() { return A.username; }
-	int leve() { return A.level; }
-
+	string user() { return id.username; }
+	int leve() { return id.level; }
+protected:
+	//Agent A;
+	ID id;
 	void Login();
 	void Logout(bool exit = false);
 	void confidentials();
-	
-	int disp(vector<string>list, string heading);
 	bool eligibility;
 private:
+	void assign(ID& a, string username, int lev);
 	int session;
 };
-class profiles : private credentials {
+class profiles : protected credentials {
 public:
-	profiles(string username, int lev) :credentials(username, lev) { hidden = true; }
+	profiles(bool to_displayornot) :credentials(to_displayornot) { hidden = true; }
 protected:
 	void add_profile();
 	void add_assets();
@@ -55,7 +54,7 @@ protected:
 	void add_pass(string &p);
 	Agent A;
 };
-class criminals : private credentials {
+class criminals : protected credentials {
 public:
 	criminals(string username, int lev) :credentials(username, lev) { hidden = true; }
 protected:
@@ -63,13 +62,13 @@ protected:
 	void details_criminals();
 	void edit_criminals();
 };
-class suspects :private credentials {
+class suspects :protected credentials {
 public:
 	suspects(string username, int lev) :credentials(username, lev) { hidden = true; }
 };
-class menu : private credentials, profiles, criminals, suspects{
+class menu : private profiles, criminals, suspects{
 public:
-	menu(bool to_displayornot) : credentials(to_displayornot),profiles(credentials::user(),credentials::leve()),   //all other class variables are initialized 
+	menu(bool to_displayornot) : profiles(to_displayornot),   //all other class variables are initialized 
 		criminals(credentials::user(), credentials::leve()), suspects(credentials::user(), credentials::leve()) 
 	{  //according to menu and credentials variables
 		if (credentials::granted()) {
@@ -89,8 +88,7 @@ public:
 
 void credentials::Logout(bool exit) {
 	system("cls");
-	A.username.clear();
-	A.password.clear();
+	id.cls();
 	eligibility = false;          //sets Eligibility to use the Program to false, user needs to relogin!
 	wait_sp("You have been Logged out Successfully", 35,true);
 	login_session(session);
@@ -106,16 +104,14 @@ void credentials::Login() {
 
 	cout << "\n\n\n\n\n\n\n";
 	wait_sp("Login ID:", 35, false); //displays the string according to line spacing
-	inputs('\0', A.username);
-	//string_enter(A.username);          //Takes the Username
-	if (A.username == "exit") exit(0); //If user enters exit the program ends
+	inputs('\0', id.username);   //Takes the Username
+	if (id.username == "exit") exit(0); //If user enters exit the program ends
 	//cout << endl << A.username;
 	cout << "\n";
 
 	wait_sp("Password:", 35,false);
-	inputs('*', A.password);
-//	string_enter(A.password,'*');   //Calls the character input string function and enters the password securely
-	if (A.password == "exit") exit(0); //If user enters exit the program ends
+	inputs('*', id.password);    //Calls the character input string function and enters the password securely
+	if (id.password == "exit") exit(0); //If user enters exit the program ends
 
 	ifstream ifs("confidentials.txt");
 	if (!ifs) {           //if there is no data available in username section
@@ -123,10 +119,7 @@ void credentials::Login() {
 		exit(0);
 	}
 	while (true) {//starts taking information available in the confidential file
-	/*	input_str(ifs, id_real, 100);
-		input_char(ifs, c, 100);
-		input_str(ifs, id_passs, 100);
-		input_num(ifs, leve, 100,1);	*/
+	
 		input_str(ifs, id_real, 100);
 		input_char(ifs, c, 100);
 		input_str(ifs, id_passs, 100);
@@ -136,11 +129,11 @@ void credentials::Login() {
 			wait_sp("Wrong Password!", 40,true);
 			return;
 		}
-		if (A.username == id_real && A.password == id_passs) {
+		if (id.username == id_real && id.password == id_passs) {
 			session = time(0);
-			add_LOG(A.username);
+			add_LOG(id.username);
 			eligibility = true; //sets user eligibility to use program to true
-			A.level = leve;   //sets user's level accoeding to information available for confidential file
+			id.level = leve;   //sets user's level accoeding to information available for confidential file
 			system("cls");
 			ifs.close();
 			return;
@@ -148,6 +141,13 @@ void credentials::Login() {
 
 	}
 }
+void credentials::assign(ID &a, string username, int lev) {
+	a.username = username;
+	a.level = lev;
+	//encrypt(username, 100);
+	//ifstream input(username + ".txt");
+	//input >> a;
+}/*
 void credentials::confidentials() {
 	ifstream input("confidentials.txt");
 	vector<string>users;
@@ -163,7 +163,7 @@ void credentials::confidentials() {
 		power.push_back(n);
 		input >> p >> c >> p >> n;
 	}
-}
+}*/
 int credentials::disp(vector<string>list, string heading) {
 	system("cls");
 	cout << setw(44) << heading << endl;
@@ -178,7 +178,7 @@ int credentials::disp(vector<string>list, string heading) {
 }
 
 void menu::main_disp() {
-	while (true) {
+	while (credentials::eligibility) {
 		choice = credentials::disp(vector<string>{ "Manage Profiles","Criminals","Log Out","Exit" }, "CBI");
 		switch (choice) {
 		case '1':
@@ -225,6 +225,10 @@ void menu::profile_disp() {
 	}
 }
 void menu::criminals_disp(){
+	system("cls");
+	cout << "Still in Progress!!";
+	_getch();
+	return;
 	while (credentials::eligibility) {
 		choice = credentials::disp(vector<string>{ "Search for Criminals","","Add Criminal Profile","Back to Main Menu" }, "CRIMINALS");
 		switch (choice){
@@ -245,9 +249,8 @@ void menu::criminals_disp(){
 
 void profiles::add_profile() {
 	system("cls");
-	Agent a;
+	Agent z;
 
-	hide_files(false);
 
 	credentials::hidden = false;
 	cout << setw(44) << "Add Profile\n";
@@ -256,34 +259,36 @@ void profiles::add_profile() {
 		system("pause");
 		return;
 	}
-	while (!a.username.size()) {
+	while (!z.id.username.size()) {
+		
 		vector<string>scrap;
 		cout << "\n\nCreate a Username:";
-		inputs('\0',a.username, true, 2, 1, "Username");
-		if (search_from_file_edit(scrap, "confidentials.txt", a.username,100) != -1)
+		inputs('\0',z.id.username, true, 2, 1, "Username");
+		if (search_from_file_edit(scrap, "confidentials.txt", z.id.username, 100) != -1) {
 			cout << endl << "Username already occupied!!";
+			z.id.username.clear();
+		}
 	}
-		add_pass(a.password);
+		add_pass(z.id.password);
 		
 		ofstream ofs;
 		ofs.open("confidentials.txt", ios::app);
 		ofs << ' ';
-		output_str(ofs, a.username, 100);
+		output_str(ofs, z.id.username, 100);
 		output_char(ofs, '=', 100);
 		ofs << ' ';
-		output_str(ofs, a.password, 100);
+		output_str(ofs, z.id.password, 100);
 		ofs << ' ';
-		output_num(ofs, a.level, 100,1);
+		output_num(ofs, z.id.level, 100,1);
 		ofs.close();
-		cin >> a;
-		ofstream out(encrypt(a.username,100) + ".txt");
-		out << a;
+		cin >> z;
+		ofstream out(encrypt(z.id.username,100) + ".txt");
+		out << z;
 		out.close();
-		hide_files(true);
 	}
 void profiles::your_profile() {
 	system("cls");
-	ifstream input(encrypt(credentials::A.username,100) + ".txt");
+	ifstream input(encrypt(credentials::id.username,100) + ".txt");
 	if (!input) {
 		wait("No File Present");
 		return;
@@ -299,7 +304,6 @@ void profiles::delete_profile() {
 	string tmp;
 	string username;
 	vector<string>data;
-	hide_files(false);
 	hidden = false;
 	if (leve() > 6) {
 		input_int(cin, "Do you want to delete your ID(1) or others(2)?", "int", ans);
@@ -310,11 +314,13 @@ void profiles::delete_profile() {
 			cin >> username;
 		}
 	}
-	else wait_sp("Delete Your Profile/n",44,false);
-
+	else {
+		username = user();
+		wait_sp("Delete Your Profile\n", 44, false);
+	}
 	input_string(cin,"Are you sure(yes/no)", tmp);
-	if (tmp == "yes") username = user();
-	else return;
+	if (tmp != "yes") 
+	return;
 
 	string file = encrypt(username,100) + ".txt";
 	remove(file.c_str());
@@ -326,17 +332,14 @@ void profiles::delete_profile() {
 		return;
 	}
 	ofstream write("confidentials.txt");
-
-	data.erase(data.begin() + i, data.begin() + i + 3);
-	for (int j = 0; j < data.size() - 1; j++) {
+	data.erase(data.begin() + i, data.begin() + i + 4);
+	for (int j = 0; j < data.size() ; j++) {
 		if (j % 4 == 0)write << endl;
 		output_str(write, data[j], 100);
 		write << ' ';
 	}
 	write.close();
-
 	wait_sp("The Agent Successfully Removed", 44, true);
-	hide_files(true);
 	hidden = true;
 	if (user() == username)
 		Logout();
@@ -344,51 +347,52 @@ void profiles::delete_profile() {
 	}
 void profiles::edit_profile() {
 	string s;
-	hide_files(false);
-	ifstream input(encrypt(credentials::A.username,100) + ".txt");
+	ifstream input(encrypt(credentials::id.username,100) + ".txt");
 	input >> A;
 	char choice = credentials::disp(vector<string>{"Change password","Edit Description","Add Assets"}, "Edit");
 	switch (choice) {
 	case '1': {
+		system("cls");
+		cout << setw(44) << "Change Password : \n";
 		string s;
 		for (int i = 0; i < 5; ++i) {
 			vector<string>temp;
-			input_string(cin, "Enter Old Password:", s);
+			cout << "\nEnter Old Password:";
+			inputs('*', s);
 			if (search_from_file_edit(temp, "confidentials.txt", user(), 100) == -1) wait("Passwords don't match!!");
 			if (temp[i + 2] != s) {
 				wait("Passwords don't match!!");
-				return;
+				continue;
 			}
 			add_pass(s);
 			temp[i + 2] = s;
 			ofstream write;
 			write.open("confidentials.txt");
-			for (int j = 0; j < temp.size() - 1; j++) {
+			for (int j = 0; j < temp.size(); j++) {
 				if (j % 4 == 0)write << endl;
 				output_str(write, temp[j], 100);
 				write << ' ';
 			}
 			write.close();
 			system("pause");
-			hide_files(true);
 			return;
 		}
 		break;
 	}
 	case '2': {
+		system("cls");
+		A.description.para.clear();
+		cout << setw(44) << "Enter the new Description\n";
 		cin >> A.description;
-		cin.clear();
+		cinclear(cin);
 		break;
 	}
 	case '3': {
-		cout << "oh";
-		system("pause");
 		add_assets();
 		break;
 	}
 	}
-	hide_files(true);
-	ofstream output(encrypt(credentials::A.username,100) + ".txt");
+	ofstream output(encrypt(credentials::id.username,100) + ".txt");
 	output << A;
 }
 void profiles::add_assets() {
@@ -433,7 +437,7 @@ void profiles::add_pass(string &p) {
 		wait("\npasswords dont match!!");
 		add_pass(p);
 	}
-	if (p2 == A.username) {
+	if (p2 == A.id.username) {
 		wait("Password is not strong since USERNAME and PASSWORD match!!");
 		add_pass(p);
 	}
@@ -468,6 +472,7 @@ void criminals::details_criminals() {
 }
 
 void start() {
+	hide_files(false);
 	check_if_superuser();      //Checks if the SUPERUSER Details are available or not
 	menu m(true);              //Starts The Login Process
 	end();
@@ -485,41 +490,68 @@ void check_if_superuser() {
 	vector<string>data;
 	int i = search_from_file_edit(data, "confidentials.txt", "superuser",100);
 	if (i == -1) {
-		hide_files(false);
 		ofstream os1("confidentials.txt", ios::app);
 		os1 << "\n×ÙÔÉÖÙ×ÉÖ ¡ ×ÙÔÉÖ¤Ù×ÉÖ•–—  Ç ";
 		ofstream os2("×ÙÔÉÖÙ×ÉÖ.txt");
-		os2 << " ×ÌÍÚÅÒ×Ì Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤’ËÑÅÍÐÇÓÑ ¿\n"
-			<< "••œ‘ª ›¦ §ÌÅÒÈÍËÅÖÌ §ÌÅÒÈÍËÅÖÌ\n"
-			<< "Ç ¬ÉÅÈ ¿ »ÅËÓÒ¶ ±ÅÖÙØÍ ·ÍÐÚÉÖ §¬”•¥·ÅÃÃÅ"
-			<< "·¬­º¥²·¬ §¶©¥¸³¶……";
+		os2 << " ·ÌÍÚÅÒ×Ì„±ÅØÌÙÖ Å¿ Á¾ÅÆÀ¿¿Â¾Ç ÑÅØÌÙÖ×ÌÍÚÅ”Å¤ËÑÅÍÐ’ÇÓÑ ¿ \n"
+			<< "••œ”‘ª ›“¦ §ÌÅÒÈÍËÅÖÌ §ÌÅÒÈÍËÅÖÌ \n"
+			<< "Ç ¨ÉÚÉÐÓÔÉÖ ¾¾ ­ ÅÑ ¸ÖÝÍÒË ØÓ ª­¼ ÊÉÛ ¸ÌÍÒË× ";
 		}
-	hide_files(true);
+//	hide_files(true);
 	return;
-}
-void assign(Agent &a, string username, int lev) {
-	a.username = username;
-	a.level = lev;
-	encrypt(username, 100);
-	ifstream input(username + ".txt");
-	input >> a;
 }
 int search_from_file_edit(vector<string>&data, string file, string to_be_searched,int encrypt) {
 	ifstream fs(file);
 	string s;
-	to_be_searched = to_be_searched;
+	input_str(fs, s, encrypt);
 	while (fs) {
-		input_str(fs, s, encrypt);
 		data.push_back(s);
+		input_str(fs, s, encrypt);
 	}
-	int i = 0;
+	for (int k = 0; k < data.size(); ++k) {
+		if (data[k] == to_be_searched)return k;
+	}
 	fs.close();
-	while (i < data.size() && data[i] != to_be_searched) {
-		cout << data[i] << endl;
-		++i;
-	}
-	if (i == data.size()) return -1;
-	return i;
+	return -1;
+}
+
+//void reset() {
+//	string id_real, id_passs;
+//	char c;
+//	int leve;
+//	ifstream ifs("confidentials.txt");
+//	if (!ifs) {           //if there is no data available in username section
+//		wait("Error!!!");
+//		exit(0);
+//	}
+//	fstream fs;
+//	string file;
+//	file = "SELFDESTRUCT.bat";
+//	fs.open(file, ios::out);
+//	while (true) {//starts taking information available in the confidential file
+//		ifs >> id_real;
+//		ifs >> c;
+//		ifs >> id_passs;
+//		ifs >> leve;
+//		
+//		fs << endl<<" del "<<id_real<<".txt /Q"; 
+//		if (!ifs)    //if there is no information according to details entered available
+//			break;
+//	}
+//	fs << endl<<"del LOG /Q";
+////	fs << "\nexit";
+////	fs << "\nDEL \"%~f0\"";
+//	fs.close();
+//	system("pause");
+//	system("start SELFDESTRUCT.bat");
+//}        
+void credit() {
+	cout << setw(44) << "Credit\n\n\n\n";
+	cout << "Made by:Shivansh Mathur";
+	cout << "\nRoll No:2767088";
+	cout << "\nProject Made on CBI Agents";
+	cout << "\nFor further updates and bug fixes go to\nhttps://github.com/shivanshcoder/Start";
+	_getch();
 }
 
 void SELF_DESTRUCT() {
@@ -537,5 +569,7 @@ void SELF_DESTRUCT() {
 	system("start SELFDESTRUCT.bat");
 }
 int main() {
+	credit();
+	system("cls");
 	start();    //Starts up the Starting function
 }

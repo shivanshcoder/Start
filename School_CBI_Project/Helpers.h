@@ -14,6 +14,11 @@ namespace Helpers {
 	struct names {
 		string name;
 	};
+	struct ID {
+		string username, password;
+		int level;
+		void cls() { username.clear(); password.clear(); level = 0; }
+	};
 	struct paragraph {
 		vector<string>para;
 	};
@@ -42,8 +47,8 @@ namespace Helpers {
 	struct Agent {
 		vector<vehicle>car;
 		person p;
-		string post, username, password;
-		int level;
+		string post;
+		ID id;
 		paragraph description;
 		bool filled;
 	};

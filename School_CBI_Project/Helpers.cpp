@@ -257,15 +257,14 @@ namespace Helpers {
 	istream& operator >> (istream& is, Agent& a) {
 		is >> a.p;
 		cout << "Enter Level:";
-		input_int(is, a.level,1);
+		input_int(is, a.id.level,1);
 		input_string(is, "Enter the Post:", a.post);
 
 		cout << "\nDescription:\n";
-		cinclear(cin);
+	//	cin.ignore(100,'\n');
 		a.description.para.clear();
 		is >> a.description;
 
-		is.clear();
 		return is;
 	}
 	ostream& operator << (ostream& os, Agent& a) {
@@ -273,7 +272,7 @@ namespace Helpers {
 		for (int i = 0; i < a.car.size(); ++i)
 				os << endl << a.car[i];
 		os << "\n\nPost:" << a.post
-			<< "\nLevel:" << a.level;
+			<< "\nLevel:" << a.id.level;
 		os << "\n\nDescription:\n";
 		os << a.description;
 		return os;
@@ -283,7 +282,7 @@ namespace Helpers {
 		string descrip;
 		is >> a.p; 
 		int j;
-		input_num(is, a.level, 100,1);
+		input_num(is, a.id.level, 100,1);
 		input_str(is, a.post, 100);
 		input_num(is, j, 100,1);
 		for (int i = 0; i < j; ++i) {
@@ -291,16 +290,16 @@ namespace Helpers {
 			is >> c;
 			a.car.push_back(c);
 		}
-	//	is >> a.description;
+		char k;
+		is >> k;
 		input_para(is, a.description.para, 100);
 		a.filled = true;
 		return is;
 	}
 	ofstream& operator << (ofstream& os, Agent& a) { 
-		hide_files(false);
 		os << a.p;
 
-		output_num(os, a.level, 100,1);
+		output_num(os, a.id.level, 100,1);
 		output_str(os, a.post, 100);
 
 		int k = a.car.size();
@@ -400,7 +399,7 @@ namespace Helpers {
 		string t;
 		t.resize(25);
 		ctime_s(&t[0], sizeof t, &now);
-		out << encrypt(t,69);
+		out << t;
 	}
 	void login_session(int start) {
 		int session = time(0) - start;
@@ -412,8 +411,8 @@ namespace Helpers {
 		ofstream out("LOG", ios::app);
 		out << "Session: ";
 		if (mins > 0)
-			out << mins << " ";
-		out << secs;
+			out << mins << " Mins ";
+		out << secs << " Secs ";
 	}
 	void see_log() {
 		ifstream in("LOG");

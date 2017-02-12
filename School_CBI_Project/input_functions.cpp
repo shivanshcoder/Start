@@ -69,6 +69,7 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 	void input_string(istream& io, string Question, string &ans) {
 		cout << Question;
 		io >> ans;
+		cinclear(io);
 	}
 	void input_line(istream& io, string& s) {
 		char c;
@@ -77,6 +78,7 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 			s += c;
 			io.get(c);
 		}
+		cinclear(io);
 	}
 	void input_line(ifstream& io, string& s) {
 		char c;
@@ -85,6 +87,7 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 			s += c;
 			io.get(c);
 		}
+		cinclear(io);
 	}
 
 	void input_int(istream& io, int& num) {
@@ -99,10 +102,10 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 		while (true) {
 			cout << statement;
 			io >> num;
+			cinclear(io);
 			if (!io) {
 				cout << "Not a " << type << " type Input!!";
-				io.clear();
-				io.ignore(10000, '\n');
+				cinclear(io);
 			}
 			else return;
 		}
@@ -110,8 +113,9 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 	void input_int(istream& io, long long& num, int digits) {
 		while (true) {
 			io >> num;
+			cinclear(io);
 			if (!io) {
-				io.clear();
+				cinclear(io);
 				return;
 			}
 			else if (digits != -1) {
@@ -123,11 +127,12 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 			else return;
 		}
 	}
-	void input_int(istream& io, int& num, int digits) {
+	void input_int(istream& io, int& num, int digits)  {
 		while (true) {
 			io >> num;
+			cinclear(io);
 			if (!io) {
-				io.clear();
+				cinclear(io);
 				return;
 			}
 			else if (digits != -1) {
@@ -160,6 +165,7 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 	}
 
 	bool cinclear(istream& io) {  //checks the state of input stream and corrects it 
+		cin.ignore(INT_MAX,'\n');
 		if (!io) {
 			if (io.bad()) {  //if the input stream gets badly corrected
 				system("cls");
@@ -239,43 +245,7 @@ void inputs(char charac, string &s, bool alpha, int num_limit, int alpc_limit, s
 			if (splchars[i] == c)return;
 		}
 		inchar_enter(c,splchars); //if it is not a desired value call the function recursively
-	}
-	void string_enter(string& s, char charac) { //same function as inputs just there is no constraints on string entered
-		char c[20];
-		s.clear();
-		inchar_enter(c[0]);
-		for (int i = 1; c[i] != 13; ++i) {
-			if (charac)
-				cout << charac;
-			else
-				cout << c[i - 1];
-			inchar_enter(c[i], { 13,8 });
-
-			while (i == 19 && c[i] != 13) {
-				c[i] = _getch();
-			}
-			while (c[i] == 8 && i > -1) {
-				cout << '\b';
-				cout << " ";
-				cout << '\b';
-				c[i] = '\0';
-				--i;
-				inchar_enter(c[i], { 8,13 });
-				while (i == 0 && c[i] == 8) {
-					inchar_enter(c[i], { 8,13 });
-				}
-				if (c[i] != 8) break;
-			}
-			if (c[i] == 13) {
-				c[i] = '\0';
-				break;
-			}
-		}
-		for (int i = 0; c[i] != '\0'; ++i) {
-			s += " ";
-			s[i] = c[i];
-		}
-	}       
+	} 
 
 	namespace encryption {
 
